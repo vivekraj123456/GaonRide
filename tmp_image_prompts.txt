@@ -1,0 +1,43 @@
+﻿PROMPT 1
+Use case: photorealistic-natural
+Asset type: website hero background image
+Primary request: a high-resolution rural Indian village road scene suitable for a transport website hero, with a yellow-green auto rickshaw on the road
+Scene/backdrop: lush greenery, small village homes in the background, open sky, clean rural road
+Subject: auto rickshaw (no logos) on a village road, a few distant villagers as tiny silhouettes optional
+Style/medium: photorealistic, cinematic wide shot
+Composition/framing: 16:9 wide composition, slightly lower horizon, ample space for text overlay
+Lighting/mood: warm golden hour light, optimistic and welcoming
+Constraints: no text, no watermarks, no readable signage, no brand logos
+
+PROMPT 2
+Use case: photorealistic-natural
+Asset type: website hero background image
+Primary request: a high-resolution rural delivery scene for a delivery services hero image
+Scene/backdrop: village market/mandi area with baskets of vegetables and parcels, a small pickup or scooter nearby
+Subject: delivery setup with groceries and parcels, rural India context
+Style/medium: photorealistic, cinematic wide shot
+Composition/framing: 16:9 wide composition, clean foreground, readable space for overlay text
+Lighting/mood: bright morning light, friendly and trustworthy
+Constraints: no text, no watermarks, no readable signage, no brand logos
+
+PROMPT 3
+Use case: photorealistic-natural
+Asset type: website hero background image
+Primary request: a high-resolution rural wedding/event tent setup for an events services hero image
+Scene/backdrop: decorated wedding tent/shamiana with warm lights, chairs neatly arranged, rural setting
+Subject: event tent and decor, no close-up faces
+Style/medium: photorealistic, cinematic wide shot
+Composition/framing: 16:9 wide composition with open space for overlay text
+Lighting/mood: festive warm evening lights, elegant yet rural
+Constraints: no text, no watermarks, no readable signage, no brand logos
+
+PROMPT 4
+Use case: photorealistic-natural
+Asset type: website hero background image
+Primary request: a high-resolution partner-driver scene for a transport partner hero image
+Scene/backdrop: rural road with greenery and village backdrop
+Subject: smiling driver standing beside a yellow-green auto rickshaw, friendly and trustworthy
+Style/medium: photorealistic, cinematic wide shot
+Composition/framing: 16:9 wide composition, subject slightly off-center, space for overlay text
+Lighting/mood: warm daylight, optimistic
+Constraints: no text, no watermarks, no readable signage, no brand logos
