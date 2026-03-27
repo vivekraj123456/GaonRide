@@ -20,17 +20,17 @@ const DeliveriesPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
-    const data = new FormData(form);
+    const formData = new FormData(form);
     try {
       const { data, error } = await supabase.from('delivery_orders').insert({
         type: tab,
-        sender_name: data.get('sender_name') as string || null,
-        pickup_address: data.get('pickup_address') as string || null,
-        delivery_address: data.get('delivery_address') as string || '',
-        parcel_type: data.get('parcel_type') as string || null,
-        grocery_list: data.get('grocery_list') as string || null,
-        preferred_time: data.get('preferred_time') as string || null,
-        phone: data.get('phone') as string || '',
+        sender_name: formData.get('sender_name') as string || null,
+        pickup_address: formData.get('pickup_address') as string || null,
+        delivery_address: formData.get('delivery_address') as string || '',
+        parcel_type: formData.get('parcel_type') as string || null,
+        grocery_list: formData.get('grocery_list') as string || null,
+        preferred_time: formData.get('preferred_time') as string || null,
+        phone: formData.get('phone') as string || '',
       }).select().single();
       if (error) throw error;
       if (data?.id) addPendingConfirmation('delivery_orders', String(data.id));

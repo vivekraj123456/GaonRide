@@ -27,17 +27,17 @@ const EventsPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
-    const data = new FormData(form);
+    const formData = new FormData(form);
     const selectedServices = Object.entries(services).filter(([,v]) => v).map(([k]) => k);
     try {
       const { data, error } = await supabase.from('event_quotes').insert({
-        full_name: data.get('full_name') as string,
-        phone: data.get('phone') as string,
-        event_type: data.get('event_type') as string,
-        event_date: data.get('event_date') as string,
-        expected_guests: data.get('expected_guests') as string,
+        full_name: formData.get('full_name') as string,
+        phone: formData.get('phone') as string,
+        event_type: formData.get('event_type') as string,
+        event_date: formData.get('event_date') as string,
+        expected_guests: formData.get('expected_guests') as string,
         services: selectedServices,
-        special_requests: data.get('special_requests') as string || null,
+        special_requests: formData.get('special_requests') as string || null,
       }).select().single();
       if (error) throw error;
       if (data?.id) addPendingConfirmation('event_quotes', String(data.id));
