@@ -5,15 +5,9 @@ import { Tent, Music, ChefHat, Car, Calendar, ArrowRight, ChevronDown, Star } fr
 import { useToast } from '../components/Toast';
 import { supabase } from '../lib/supabase';
 import { addPendingConfirmation, requestBrowserNotificationPermission, useConfirmationNotifications } from '../hooks/useConfirmationNotifications';
+import { serviceTent, serviceDj, serviceCatering, serviceCar } from '../assets/images';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const assets = {
-  tent: '/src/assets/service_tent_png_1774418988803.png',
-  dj: '/src/assets/service_dj_png_1774419008562.png',
-  catering: '/src/assets/service_catering_png_1774419033016.png',
-  car: '/src/assets/service_car_png_1774419055758.png',
-};
 
 const EventsPage: React.FC = () => {
   const { showToast } = useToast();
@@ -58,10 +52,10 @@ const EventsPage: React.FC = () => {
   };
 
   const serviceCards = [
-    {img:assets.tent,title:'Tent & Decoration',desc:'Beautiful shamiyana tents with flower decorations, stage setup, lighting, seating arrangements, and entrance gates for weddings and festivals.',price:'₹15,000+',icon:<Tent size={20}/>},
-    {img:assets.dj,title:'DJ & Sound System',desc:'Professional DJ with high-quality speakers, mixing console, LED lights, and fog machines. Perfect for sangeet, mehendi, and reception nights.',price:'₹8,000+',icon:<Music size={20}/>},
-    {img:assets.catering,title:'Catering Service',desc:'Traditional village-style catering with authentic flavors. Veg and non-veg menus, chaat counters, sweet stalls, and live cooking stations.',price:'₹200/plate',icon:<ChefHat size={20}/>},
-    {img:assets.car,title:'Wedding Cars',desc:'Decorated Bolero SUVs and luxury cars for baraat processions. Flower garlands, ribbons, and a professional chauffeur included.',price:'₹5,000+',icon:<Car size={20}/>},
+    {img:serviceTent,title:'Tent & Decoration',desc:'Beautiful shamiyana tents with flower decorations, stage setup, lighting, seating arrangements, and entrance gates for weddings and festivals.',price:'₹15,000+',icon:<Tent size={20}/>},
+    {img:serviceDj,title:'DJ & Sound System',desc:'Professional DJ with high-quality speakers, mixing console, LED lights, and fog machines. Perfect for sangeet, mehendi, and reception nights.',price:'₹8,000+',icon:<Music size={20}/>},
+    {img:serviceCatering,title:'Catering Service',desc:'Traditional village-style catering with authentic flavors. Veg and non-veg menus, chaat counters, sweet stalls, and live cooking stations.',price:'₹200/plate',icon:<ChefHat size={20}/>},
+    {img:serviceCar,title:'Wedding Cars',desc:'Decorated Bolero SUVs and luxury cars for baraat processions. Flower garlands, ribbons, and a professional chauffeur included.',price:'₹5,000+',icon:<Car size={20}/>},
   ];
 
   const packages = [
@@ -81,7 +75,7 @@ const EventsPage: React.FC = () => {
   return (
     <>
       <section className="hero" style={{minHeight:'60vh'}}>
-        <div className="hero-bg"><img src={assets.tent} alt="Events"/></div>
+        <div className="hero-bg"><img src={serviceTent} alt="Events"/></div>
         <div className="hero-overlay"/>
         <div className="container">
           <div className="ev-hero hero-content" style={{paddingTop:140}}>

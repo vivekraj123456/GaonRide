@@ -9,12 +9,9 @@ import {
 import { useToast } from '../components/Toast';
 import { supabase } from '../lib/supabase';
 import { addPendingConfirmation, requestBrowserNotificationPermission, useConfirmationNotifications } from '../hooks/useConfirmationNotifications';
+import { heroVillage } from '../assets/images';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const assets = {
-  hero: '/src/assets/hero_village_png_1774418955734.png',
-};
 
 const vehicles = [
   { id: 'auto', name: 'Auto Rickshaw', icon: <Navigation size={32} />, price: '₹10/km', capacity: '3 passengers', desc: 'Classic green-yellow auto for short village-to-town trips. Affordable and always available.', features: ['GPS Tracked', 'Rain Cover', 'Luggage Space'], popular: true },
@@ -79,7 +76,7 @@ const RidesPage: React.FC = () => {
     <>
       {/* HERO */}
       <section className="hero" style={{ minHeight: '60vh' }}>
-        <div className="hero-bg"><img src={assets.hero} alt="Rides" /></div>
+        <div className="hero-bg"><img src={heroVillage} alt="Rides" /></div>
         <div className="hero-overlay" />
         <div className="container">
           <div className="ride-hero-content hero-content" style={{ paddingTop: 140 }}>

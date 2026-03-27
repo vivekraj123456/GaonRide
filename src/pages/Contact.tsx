@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { Phone, Mail, MapPin, MessageCircle, ChevronDown, Send, Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
 import { useToast } from '../components/Toast';
 import { supabase } from '../lib/supabase';
+import { heroContact } from '../assets/images';
 
 const ContactPage: React.FC = () => {
   const { showToast } = useToast();
@@ -59,7 +60,7 @@ const ContactPage: React.FC = () => {
   return (
     <>
       <section className="hero" style={{ minHeight: '50vh' }}>
-        <div className="hero-bg"><img src="/src/assets/hero_village_contact_2560x1440.png" alt="Contact" /></div>
+        <div className="hero-bg"><img src={heroContact} alt="Contact" /></div>
         <div className="hero-overlay" />
         <div className="container">
           <div className="contact-hero hero-content" style={{ paddingTop: 140 }}>

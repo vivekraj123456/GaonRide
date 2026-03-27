@@ -8,17 +8,9 @@ import {
   Shield, Heart, ChevronRight, ArrowRight, Truck, CalendarHeart
 } from 'lucide-react';
 import { ParticlesBg, Tilt3D } from '../components/Effects3D';
+import { heroVillage, serviceTent, serviceCatering, serviceCar, partnerRickshaw } from '../assets/images';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const assets = {
-  hero: '/src/assets/hero_village_png_1774418955734.png',
-  tent: '/src/assets/service_tent_png_1774418988803.png',
-  dj: '/src/assets/service_dj_png_1774419008562.png',
-  catering: '/src/assets/service_catering_png_1774419033016.png',
-  car: '/src/assets/service_car_png_1774419055758.png',
-  partner: '/src/assets/partner_rickshaw_png_1774419086915.png',
-};
 
 const HomePage: React.FC = () => {
   const [counters, setCounters] = useState({ rides: 0, villages: 0, drivers: 0, events: 0 });
@@ -95,7 +87,7 @@ const HomePage: React.FC = () => {
       {/* HERO */}
       <section className="hero">
         <div className="hero-bg">
-          <img src={assets.hero} alt="GaonRide Village Transport" />
+          <img src={heroVillage} alt="GaonRide Village Transport" />
         </div>
         <div className="hero-overlay" />
         <ParticlesBg />
@@ -216,10 +208,10 @@ const HomePage: React.FC = () => {
           </div>
           <div className="grid-4">
             {[
-              { img: assets.car, title: 'Village Rides', desc: 'Auto, Bolero, SUV — comfortable rides connecting villages to towns and cities.', link: '/rides', tag: 'Most Popular' },
-              { img: assets.catering, title: 'Parcel & Grocery', desc: 'Send parcels or get fresh groceries delivered right to your village doorstep.', link: '/deliveries', tag: 'Fast Delivery' },
-              { img: assets.tent, title: 'Event Planning', desc: 'Tent, decor, DJ, catering — complete wedding and event solutions in one place.', link: '/events', tag: 'Full Service' },
-              { img: assets.partner, title: 'Earn with Us', desc: 'Own a vehicle? Join GaonRide as a partner driver and earn daily income.', link: '/partner', tag: 'Join Now' },
+              { img: serviceCar, title: 'Village Rides', desc: 'Auto, Bolero, SUV — comfortable rides connecting villages to towns and cities.', link: '/rides', tag: 'Most Popular' },
+              { img: serviceCatering, title: 'Parcel & Grocery', desc: 'Send parcels or get fresh groceries delivered right to your village doorstep.', link: '/deliveries', tag: 'Fast Delivery' },
+              { img: serviceTent, title: 'Event Planning', desc: 'Tent, decor, DJ, catering — complete wedding and event solutions in one place.', link: '/events', tag: 'Full Service' },
+              { img: partnerRickshaw, title: 'Earn with Us', desc: 'Own a vehicle? Join GaonRide as a partner driver and earn daily income.', link: '/partner', tag: 'Join Now' },
             ].map((s, i) => (
               <Link to={s.link} key={i} style={{ textDecoration: 'none' }}>
                 <div className="card-3d">

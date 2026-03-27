@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { UserPlus, IndianRupee, Clock, Shield, Star, ArrowRight, ChevronDown, Users, Car, MapPin, TrendingUp } from 'lucide-react';
 import { useToast } from '../components/Toast';
 import { supabase } from '../lib/supabase';
+import { partnerRickshaw } from '../assets/images';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -94,7 +95,7 @@ const PartnerPage: React.FC = () => {
   return (
     <>
       <section className="hero" style={{minHeight:'60vh'}}>
-        <div className="hero-bg"><img src="/src/assets/partner_rickshaw_png_1774419086915.png" alt="Partner"/></div>
+        <div className="hero-bg"><img src={partnerRickshaw} alt="Partner"/></div>
         <div className="hero-overlay"/>
         <div className="container">
           <div className="partner-hero hero-content" style={{paddingTop:140}}>

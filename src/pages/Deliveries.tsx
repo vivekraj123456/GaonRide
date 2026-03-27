@@ -5,6 +5,7 @@ import { Package, ShoppingCart, Clock, MapPin, Shield, ChevronDown, Truck, Box, 
 import { useToast } from '../components/Toast';
 import { supabase } from '../lib/supabase';
 import { addPendingConfirmation, requestBrowserNotificationPermission, useConfirmationNotifications } from '../hooks/useConfirmationNotifications';
+import { serviceCatering } from '../assets/images';
 gsap.registerPlugin(ScrollTrigger);
 
 const DeliveriesPage: React.FC = () => {
@@ -53,7 +54,7 @@ const DeliveriesPage: React.FC = () => {
   return (
     <>
       <section className="hero" style={{minHeight:'60vh'}}>
-        <div className="hero-bg"><img src="/src/assets/service_catering_png_1774419033016.png" alt="Deliveries"/></div>
+        <div className="hero-bg"><img src={serviceCatering} alt="Deliveries"/></div>
         <div className="hero-overlay"/>
         <div className="container">
           <div className="del-hero hero-content" style={{paddingTop:140}}>
