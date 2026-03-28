@@ -5,7 +5,6 @@ import { Tent, Music, ChefHat, Car, Calendar, ArrowRight, ChevronDown, Star } fr
 import { useToast } from '../components/Toast';
 import { supabase } from '../lib/supabase';
 import { addPendingConfirmation, requestBrowserNotificationPermission, useConfirmationNotifications } from '../hooks/useConfirmationNotifications';
-import { serviceTent, serviceDj, serviceCatering, serviceCar } from '../assets/images';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -52,10 +51,10 @@ const EventsPage: React.FC = () => {
   };
 
   const serviceCards = [
-    {img:serviceTent,title:'Tent & Decoration',desc:'Beautiful shamiyana tents with flower decorations, stage setup, lighting, seating arrangements, and entrance gates for weddings and festivals.',price:'₹15,000+',icon:<Tent size={20}/>},
-    {img:serviceDj,title:'DJ & Sound System',desc:'Professional DJ with high-quality speakers, mixing console, LED lights, and fog machines. Perfect for sangeet, mehendi, and reception nights.',price:'₹8,000+',icon:<Music size={20}/>},
-    {img:serviceCatering,title:'Catering Service',desc:'Traditional village-style catering with authentic flavors. Veg and non-veg menus, chaat counters, sweet stalls, and live cooking stations.',price:'₹200/plate',icon:<ChefHat size={20}/>},
-    {img:serviceCar,title:'Wedding Cars',desc:'Decorated Bolero SUVs and luxury cars for baraat processions. Flower garlands, ribbons, and a professional chauffeur included.',price:'₹5,000+',icon:<Car size={20}/>},
+    {img:'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80',title:'Tent & Decoration',desc:'Beautiful shamiyana tents with flower decorations, stage setup, lighting, seating arrangements, and entrance gates for weddings and festivals.',price:'₹15,000+',icon:<Tent size={20}/>},
+    {img:'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&q=80',title:'DJ & Sound System',desc:'Professional DJ with high-quality speakers, mixing console, LED lights, and fog machines. Perfect for sangeet, mehendi, and reception nights.',price:'₹8,000+',icon:<Music size={20}/>},
+    {img:'https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80',title:'Catering Service',desc:'Traditional village-style catering with authentic flavors. Veg and non-veg menus, chaat counters, sweet stalls, and live cooking stations.',price:'₹200/plate',icon:<ChefHat size={20}/>},
+    {img:'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=800&q=80',title:'Wedding Cars',desc:'Decorated Bolero SUVs and luxury cars for baraat processions. Flower garlands, ribbons, and a professional chauffeur included.',price:'₹5,000+',icon:<Car size={20}/>},
   ];
 
   const packages = [
@@ -74,8 +73,8 @@ const EventsPage: React.FC = () => {
 
   return (
     <>
-      <section className="hero" style={{minHeight:'60vh'}}>
-        <div className="hero-bg"><img src={serviceTent} alt="Events"/></div>
+      <section className="hero" style={{minHeight:'60vh', position: 'relative'}}>
+        <div className="hero-bg"><img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=2000&q=80" alt="Events"/></div>
         <div className="hero-overlay"/>
         <div className="container">
           <div className="ev-hero hero-content" style={{paddingTop:140}}>
@@ -83,6 +82,11 @@ const EventsPage: React.FC = () => {
             <h1>Event & <span className="highlight">Wedding</span> Services</h1>
             <p>From intimate village gatherings to grand weddings — tent, DJ, catering, and decorated cars, all in one place.</p>
           </div>
+        </div>
+        <div style={{ position: 'absolute', bottom: -1, left: 0, width: '100%', overflow: 'hidden', lineHeight: 0, zIndex: 5, pointerEvents: 'none' }}>
+          <svg viewBox="0 0 1440 320" style={{ display: 'block', width: '100%', height: '90px' }} preserveAspectRatio="none">
+            <path fill="#ffffff" fillOpacity="1" d="M0,128 Q720,350 1440,128 L1440,320 L0,320 Z"></path>
+          </svg>
         </div>
       </section>
 
@@ -110,8 +114,13 @@ const EventsPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="section section-alt">
-        <div className="container">
+      <section className="section section-alt" style={{ position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', left: '-10%', bottom: '-10%', opacity: 0.04, zIndex: 0, pointerEvents: 'none' }}>
+           <svg width="500" height="500" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+             <path fill="var(--primary)" d="M47.7,-75.6C62,-67.2,73.9,-53.6,80.4,-37.6C86.9,-21.6,88, -3.2,83.7,13.6C79.4,30.4,69.7,45.6,56.5,56.9C43.3,68.2,26.6,75.6,8.5,78.5C-9.6,81.4,-28.1,79.8,-43.3,70.9C-58.5,62,-70.4,45.8,-76.5,27.5C-82.6,9.2,-82.9,-11.5,-75.6,-28.5C-68.3,-45.5,-53.4,-58.8,-37.9,-66.8C-22.4,-74.8,-6.3,-77.5,9.4,-79.8C25.1,-82.1,43.4,-84,47.7,-75.6Z" transform="translate(100 100)" />
+           </svg>
+        </div>
+        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <div className="grid-2">
             <div>
               <h2 style={{fontSize:32,fontWeight:800,marginBottom:16}}>Get a <span style={{color:'var(--primary)'}}>Quote</span> for Your Event!</h2>

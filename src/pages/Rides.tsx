@@ -9,7 +9,6 @@ import {
 import { useToast } from '../components/Toast';
 import { supabase } from '../lib/supabase';
 import { addPendingConfirmation, requestBrowserNotificationPermission, useConfirmationNotifications } from '../hooks/useConfirmationNotifications';
-import { heroVillage } from '../assets/images';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -75,8 +74,8 @@ const RidesPage: React.FC = () => {
   return (
     <>
       {/* HERO */}
-      <section className="hero" style={{ minHeight: '60vh' }}>
-        <div className="hero-bg"><img src={heroVillage} alt="Rides" /></div>
+      <section className="hero" style={{ minHeight: '60vh', position: 'relative' }}>
+        <div className="hero-bg"><img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=2000&q=80" alt="Rides" /></div>
         <div className="hero-overlay" />
         <div className="container">
           <div className="ride-hero-content hero-content" style={{ paddingTop: 140 }}>
@@ -86,6 +85,11 @@ const RidesPage: React.FC = () => {
             <h1>Book Your <span className="highlight">Ride</span></h1>
             <p>Choose from Auto Rickshaws, Bolero SUVs, Bike Taxis, or Tractors. Safe, affordable, and always on time.</p>
           </div>
+        </div>
+        <div style={{ position: 'absolute', bottom: -1, left: 0, width: '100%', overflow: 'hidden', lineHeight: 0, zIndex: 5, pointerEvents: 'none' }}>
+          <svg viewBox="0 0 1440 320" style={{ display: 'block', width: '100%', height: '80px' }} preserveAspectRatio="none">
+            <path fill="#ffffff" fillOpacity="1" d="M0,224 C320,64 960,352 1440,128 L1440,320 L0,320 Z"></path>
+          </svg>
         </div>
       </section>
 
@@ -156,8 +160,13 @@ const RidesPage: React.FC = () => {
       </section>
 
       {/* VEHICLE CARDS */}
-      <section className="section section-alt">
-        <div className="container">
+      <section className="section section-alt" style={{ position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', right: '-5%', top: '10%', opacity: 0.03, zIndex: 0, pointerEvents: 'none' }}>
+          <svg width="600" height="600" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path fill="var(--primary)" d="M51.9,-71.6C66,-61.7,75.3,-45.5,80.1,-28.2C84.9,-10.9,85.2,7.5,79.2,23.9C73.2,40.3,60.9,54.7,46.1,63.9C31.3,73.1,14,77.1,-2.4,80.4C-18.8,83.7,-37.6,86.3,-52.1,78C-66.6,69.7,-76.8,48.5,-81.8,27.1C-86.8,5.7,-86.7,-14.9,-78.7,-31.6C-70.7,-48.3,-54.8,-61.1,-39.1,-70.4C-23.4,-79.7,-7.9,-85.5,7.9,-95.9C23.7,-106.3,37.8,-81.5,51.9,-71.6Z" transform="translate(100 100)" />
+          </svg>
+        </div>
+        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <div className="section-header">
             <h2>Choose Your <span>Vehicle</span></h2>
             <p>We have the right ride for every journey, every budget.</p>

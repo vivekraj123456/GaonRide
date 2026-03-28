@@ -1,9 +1,9 @@
-﻿import React, { useEffect, useState } from 'react';
+﻿
+import React, { useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { Phone, Mail, MapPin, MessageCircle, ChevronDown, Send, Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
 import { useToast } from '../components/Toast';
 import { supabase } from '../lib/supabase';
-import { heroContact } from '../assets/images';
 
 const ContactPage: React.FC = () => {
   const { showToast } = useToast();
@@ -59,15 +59,20 @@ const ContactPage: React.FC = () => {
 
   return (
     <>
-      <section className="hero" style={{ minHeight: '50vh' }}>
-        <div className="hero-bg"><img src={heroContact} alt="Contact" /></div>
+      <section className="hero" style={{ minHeight: '50vh', position: 'relative' }}>
+        <div className="hero-bg"><img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=2000&q=80" alt="Community Support" /></div>
         <div className="hero-overlay" />
         <div className="container">
           <div className="contact-hero hero-content" style={{ paddingTop: 140 }}>
-            <p style={{ color: 'var(--accent)', fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>📞 We're Here to Help</p>
-            <h1>Get in <span className="highlight">Touch</span></h1>
-            <p>Have a question, feedback, or need help? Our team is ready to assist you.</p>
+            <p style={{ color: 'var(--accent)', fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>🤝 We're Here For You</p>
+            <h1>Always <span className="highlight">Connected</span></h1>
+            <p>Whether you need help booking a ride or want to bring GaonRide to your village, our community support team is just a call away.</p>
           </div>
+        </div>
+        <div style={{ position: 'absolute', bottom: -1, left: 0, width: '100%', overflow: 'hidden', lineHeight: 0, zIndex: 5, pointerEvents: 'none' }}>
+          <svg viewBox="0 0 1440 320" style={{ display: 'block', width: '100%', height: '80px' }} preserveAspectRatio="none">
+            <path fill="#ffffff" fillOpacity="1" d="M0,192 C288,320 576,64 864,192 C1152,320 1344,128 1440,160 L1440,320 L0,320 Z"></path>
+          </svg>
         </div>
       </section>
 
@@ -86,8 +91,13 @@ const ContactPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="section section-alt">
-        <div className="container">
+      <section className="section section-alt" style={{ position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', right: '-10%', bottom: '0%', opacity: 0.03, zIndex: 0, pointerEvents: 'none' }}>
+          <svg width="600" height="600" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path fill="var(--primary)" d="M49.2,-72.6C62.9,-63.3,72.6,-47.9,78.4,-31.1C84.2,-14.3,86.1,3.9,81.2,20.2C76.3,36.5,64.6,50.9,50.3,60.6C36,70.3,19.1,75.5,1.2,73.8C-16.7,72.1,-33.4,63.5,-47.5,52.3C-61.6,41.1,-73.1,27.3,-78.4,11.4C-83.7,-4.5,-82.8,-22.5,-74.6,-37C-66.4,-51.5,-50.9,-62.5,-35.5,-71.1C-20.1,-79.7,-4.8,-85.9,10.6,-88.7C26,-91.5,41.4,-82,49.2,-72.6Z" transform="translate(100 100)" />
+          </svg>
+        </div>
+        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <div className="grid-2">
             <div className="form-card" style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.12)' }}>
               <h3>Send us a Message</h3>

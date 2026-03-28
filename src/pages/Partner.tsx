@@ -6,7 +6,6 @@ import { motion } from 'framer-motion';
 import { UserPlus, IndianRupee, Clock, Shield, Star, ArrowRight, ChevronDown, Users, Car, MapPin, TrendingUp } from 'lucide-react';
 import { useToast } from '../components/Toast';
 import { supabase } from '../lib/supabase';
-import { partnerRickshaw } from '../assets/images';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -94,8 +93,8 @@ const PartnerPage: React.FC = () => {
 
   return (
     <>
-      <section className="hero" style={{minHeight:'60vh'}}>
-        <div className="hero-bg"><img src={partnerRickshaw} alt="Partner"/></div>
+      <section className="hero" style={{minHeight:'60vh', position: 'relative'}}>
+        <div className="hero-bg"><img src="https://images.unsplash.com/photo-1516733968668-dbdce39c4651?auto=format&fit=crop&w=2000&q=80" alt="Partner"/></div>
         <div className="hero-overlay"/>
         <div className="container">
           <div className="partner-hero hero-content" style={{paddingTop:140}}>
@@ -103,6 +102,12 @@ const PartnerPage: React.FC = () => {
             <h1>Become a <span className="highlight">GaonRide</span> Partner</h1>
             <p>Own a vehicle? Join 1,200+ happy driver partners earning steady daily income without leaving their village.</p>
           </div>
+        </div>
+        <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', overflow: 'hidden', lineHeight: 0, zIndex: 1, pointerEvents: 'none' }}>
+          <svg viewBox="0 0 1440 320" style={{ display: 'block', width: '100%', height: '120px' }} preserveAspectRatio="none">
+            <path fill="rgba(255,255,255,0.03)" d="M0,288 L480,224 L960,160 L1440,64 L1440,320 L0,320 Z"></path>
+            <path fill="rgba(255,255,255,0.07)" d="M0,320 L480,256 L960,192 L1440,128 L1440,320 L0,320 Z"></path>
+          </svg>
         </div>
       </section>
 
@@ -116,8 +121,13 @@ const PartnerPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="section">
-        <div className="container">
+      <section className="section" style={{ position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', left: '-5%', top: '10%', opacity: 0.03, zIndex: 0, pointerEvents: 'none' }}>
+          <svg width="500" height="500" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path fill="var(--primary)" d="M51.2,-70.1C65.5,-61.7,75.6,-46.2,80.5,-29.4C85.4,-12.6,85,5.5,78.8,21.5C72.6,37.5,60.6,51.4,46.1,60.8C31.6,70.2,14.6,75.1,-2.3,78.3C-19.2,81.5,-36.1,83,-49.6,74.9C-63.1,66.8,-73.2,49.1,-79.1,30.5C-85,11.9,-86.7,-8.6,-80.1,-25.5C-73.5,-42.4,-58.6,-55.7,-42.9,-63.8C-27.2,-71.9,-10.7,-75.8,5.7,-83.1C22.1,-90.4,42.5,-84.9,51.2,-70.1Z" transform="translate(100 100)" />
+          </svg>
+        </div>
+        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <div className="section-header"><h2>Why <span>Partner</span> With Us?</h2><p>Real benefits for real village entrepreneurs.</p></div>
           <div className="grid-3">
             {benefits.map((b,i)=>(

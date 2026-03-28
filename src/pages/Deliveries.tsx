@@ -5,7 +5,6 @@ import { Package, ShoppingCart, Clock, MapPin, Shield, ChevronDown, Truck, Box, 
 import { useToast } from '../components/Toast';
 import { supabase } from '../lib/supabase';
 import { addPendingConfirmation, requestBrowserNotificationPermission, useConfirmationNotifications } from '../hooks/useConfirmationNotifications';
-import { serviceCatering } from '../assets/images';
 gsap.registerPlugin(ScrollTrigger);
 
 const DeliveriesPage: React.FC = () => {
@@ -53,8 +52,8 @@ const DeliveriesPage: React.FC = () => {
 
   return (
     <>
-      <section className="hero" style={{minHeight:'60vh'}}>
-        <div className="hero-bg"><img src={serviceCatering} alt="Deliveries"/></div>
+      <section className="hero" style={{minHeight:'60vh', position: 'relative'}}>
+        <div className="hero-bg"><img src="https://images.unsplash.com/photo-1608686207856-001b95cf60ca?auto=format&fit=crop&w=2000&q=80" alt="Deliveries"/></div>
         <div className="hero-overlay"/>
         <div className="container">
           <div className="del-hero hero-content" style={{paddingTop:140}}>
@@ -62,6 +61,11 @@ const DeliveriesPage: React.FC = () => {
             <h1>Parcel & <span className="highlight">Grocery</span> Delivery</h1>
             <p>Send parcels anywhere or order fresh groceries from the nearest mandi. Fast, reliable, and affordable.</p>
           </div>
+        </div>
+        <div style={{ position: 'absolute', bottom: -1, left: 0, width: '100%', overflow: 'hidden', lineHeight: 0, zIndex: 5, pointerEvents: 'none' }}>
+          <svg viewBox="0 0 1440 320" style={{ display: 'block', width: '100%', height: '80px' }} preserveAspectRatio="none">
+            <path fill="#ffffff" fillOpacity="1" d="M0,320 L0,224 L360,288 L720,160 L1080,256 L1440,128 L1440,320 Z"></path>
+          </svg>
         </div>
       </section>
 
@@ -127,8 +131,17 @@ const DeliveriesPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="section section-alt">
-        <div className="container">
+      <section className="section section-alt" style={{ position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', right: -20, top: 20, opacity: 0.03, zIndex: 0, pointerEvents: 'none' }}>
+          <svg width="400" height="400" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round">
+            <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2" />
+            <line x1="12" y1="22" x2="12" y2="15.5" />
+            <polyline points="22 8.5 12 15.5 2 8.5" />
+            <polyline points="2 15.5 12 8.5 22 15.5" />
+            <line x1="12" y1="2" x2="12" y2="8.5" />
+          </svg>
+        </div>
+        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <div className="section-header"><h2>Delivery <span>Pricing</span></h2><p>Affordable rates for every delivery.</p></div>
           <div className="grid-3">
             {[

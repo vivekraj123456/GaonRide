@@ -89,3 +89,10 @@ CREATE POLICY "Allow auth update" ON delivery_orders FOR UPDATE USING (true);
 CREATE POLICY "Allow auth update" ON event_quotes FOR UPDATE USING (true);
 CREATE POLICY "Allow auth update" ON partner_registrations FOR UPDATE USING (true);
 CREATE POLICY "Allow auth update" ON contact_messages FOR UPDATE USING (true);
+
+-- Allow authenticated users to delete (for admin dashboard)
+CREATE POLICY "Allow auth delete" ON ride_bookings FOR DELETE USING (true);
+CREATE POLICY "Allow auth delete" ON delivery_orders FOR DELETE USING (true);
+CREATE POLICY "Allow auth delete" ON event_quotes FOR DELETE USING (true);
+CREATE POLICY "Allow auth delete" ON partner_registrations FOR DELETE USING (true);
+CREATE POLICY "Allow auth delete" ON contact_messages FOR DELETE USING (true);

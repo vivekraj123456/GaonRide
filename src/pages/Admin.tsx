@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
+import { useToast } from '../components/Toast';
 import { Navigation, Car, Package, Calendar, Users, Mail, LogOut, RefreshCw, Eye, CheckCircle, Clock, ChevronDown } from 'lucide-react';
 
 type Tab = 'overview' | 'rides' | 'deliveries' | 'events' | 'partners' | 'messages';
 
 const AdminPage: React.FC = () => {
+  const { showToast } = useToast();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<Tab>('overview');
@@ -21,6 +23,11 @@ const AdminPage: React.FC = () => {
 
   useEffect(() => {
     checkAuth();
+  }, []);
+
+  useEffect(() => {
+    document.body.classList.add('admin-mode');
+    return () => document.body.classList.remove('admin-mode');
   }, []);
 
   const checkAuth = async () => {
@@ -107,6 +114,47 @@ const AdminPage: React.FC = () => {
     fetchAllData();
   };
 
+  const deleteRecord = async (table: string, id: string) => {
+    const confirmed = window.confirm('Are you sure you want to delete this data? This action cannot be undone.');
+    if (!confirmed) return;
+    const { data, error, count } = await supabase
+      .from(table)
+      .delete({ count: 'exact' })
+      .eq('id', id)
+      .select('id');
+    if (error) {
+      console.error(error);
+      showToast(`❌ Delete failed: ${error.message}`);
+      return;
+    }
+    if (!count || count === 0 || !data || data.length === 0) {
+      showToast('❌ Delete failed: no rows removed. Check permissions.');
+      return;
+    }
+    const matches = (row: any) => String(row.id) !== String(id);
+    switch (table) {
+      case 'ride_bookings':
+        setRides(prev => prev.filter(matches));
+        break;
+      case 'delivery_orders':
+        setDeliveries(prev => prev.filter(matches));
+        break;
+      case 'event_quotes':
+        setEvents(prev => prev.filter(matches));
+        break;
+      case 'partner_registrations':
+        setPartners(prev => prev.filter(matches));
+        break;
+      case 'contact_messages':
+        setMessages(prev => prev.filter(matches));
+        break;
+      default:
+        break;
+    }
+    showToast('Record deleted successfully.');
+    fetchAllData();
+  };
+
   const formatDate = (d: string) => new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 
   const StatusBadge = ({ status }: { status: string }) => {
@@ -170,22 +218,22 @@ const AdminPage: React.FC = () => {
   ];
 
   return (
-    <div style={{ minHeight: '100vh', paddingTop: 80, background: '#f8f9fa' }}>
+    <div className="admin-page">
       <div className="container">
         {/* Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 32 }}>
+        <div className="admin-header">
           <div>
             <h1 style={{ fontSize: 28, fontWeight: 800 }}>Admin Dashboard</h1>
             <p style={{ color: 'var(--text-muted)' }}>Manage all GaonRide submissions</p>
           </div>
-          <div style={{ display: 'flex', gap: 12 }}>
+          <div className="admin-header-actions">
             <button className="btn btn-primary btn-sm" onClick={fetchAllData}><RefreshCw size={16} /> Refresh</button>
             <button className="btn btn-outline btn-sm" style={{ color: 'var(--text)', borderColor: '#e5e7eb' }} onClick={handleLogout}><LogOut size={16} /> Logout</button>
           </div>
         </div>
 
         {/* Tabs */}
-        <div style={{ display: 'flex', gap: 4, marginBottom: 32, overflowX: 'auto', background: 'white', borderRadius: 'var(--radius)', padding: 4, boxShadow: 'var(--shadow)' }}>
+        <div className="admin-tabs">
           {tabs.map(t => (
             <button key={t.key} onClick={() => setTab(t.key)}
               style={{
@@ -201,7 +249,7 @@ const AdminPage: React.FC = () => {
         {/* OVERVIEW */}
         {tab === 'overview' && (
           <div>
-            <div className="grid-3" style={{ gridTemplateColumns: 'repeat(5, 1fr)', marginBottom: 32 }}>
+            <div className="admin-overview-grid">
               {overviewCards.map((c, i) => (
                 <div key={i} style={{ background: 'white', borderRadius: 'var(--radius)', padding: 24, boxShadow: 'var(--shadow)', cursor: 'pointer' }}
                   onClick={() => setTab(tabs[i + 1].key)}>
@@ -221,10 +269,10 @@ const AdminPage: React.FC = () => {
                 ...deliveries.slice(0, 2).map(r => ({ ...r, _type: 'Delivery', _table: 'delivery_orders' })),
                 ...events.slice(0, 2).map(r => ({ ...r, _type: 'Event', _table: 'event_quotes' })),
               ].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()).slice(0, 8).map((item, i) => (
-                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 24px', borderBottom: '1px solid #f3f4f6' }}>
+                <div key={i} className="admin-activity-row">
                   <div>
                     <span style={{ fontWeight: 600 }}>{item._type}</span>
-                    <span style={{ color: 'var(--text-muted)', fontSize: 13, marginLeft: 12 }}>
+                    <span className="admin-activity-meta">
                       {item.phone || item.full_name || 'N/A'} — {formatDate(item.created_at)}
                     </span>
                   </div>
@@ -239,18 +287,18 @@ const AdminPage: React.FC = () => {
         )}
 
         {/* DATA TABLES */}
-        {tab === 'rides' && <DataTable title="Ride Bookings" data={rides} table="ride_bookings" columns={['pickup', 'drop_location', 'vehicle', 'phone', 'status', 'created_at']} updateStatus={updateStatus} formatDate={formatDate} StatusBadge={StatusBadge} />}
-        {tab === 'deliveries' && <DataTable title="Delivery Orders" data={deliveries} table="delivery_orders" columns={['type', 'sender_name', 'delivery_address', 'phone', 'status', 'created_at']} updateStatus={updateStatus} formatDate={formatDate} StatusBadge={StatusBadge} />}
-        {tab === 'events' && <DataTable title="Event Quotes" data={events} table="event_quotes" columns={['full_name', 'event_type', 'event_date', 'phone', 'status', 'created_at']} updateStatus={updateStatus} formatDate={formatDate} StatusBadge={StatusBadge} />}
-        {tab === 'partners' && <DataTable title="Partner Registrations" data={partners} table="partner_registrations" columns={['full_name', 'village', 'district', 'phone', 'status', 'created_at']} updateStatus={updateStatus} formatDate={formatDate} StatusBadge={StatusBadge} />}
-        {tab === 'messages' && <DataTable title="Contact Messages" data={messages} table="contact_messages" columns={['full_name', 'subject', 'message', 'phone', 'status', 'created_at']} updateStatus={updateStatus} formatDate={formatDate} StatusBadge={StatusBadge} statuses={['unread', 'read', 'resolved']} />}
+        {tab === 'rides' && <DataTable title="Ride Bookings" data={rides} table="ride_bookings" columns={['pickup', 'drop_location', 'vehicle', 'phone', 'status', 'created_at']} updateStatus={updateStatus} deleteRecord={deleteRecord} formatDate={formatDate} StatusBadge={StatusBadge} />}
+        {tab === 'deliveries' && <DataTable title="Delivery Orders" data={deliveries} table="delivery_orders" columns={['type', 'sender_name', 'delivery_address', 'phone', 'status', 'created_at']} updateStatus={updateStatus} deleteRecord={deleteRecord} formatDate={formatDate} StatusBadge={StatusBadge} />}
+        {tab === 'events' && <DataTable title="Event Quotes" data={events} table="event_quotes" columns={['full_name', 'event_type', 'event_date', 'phone', 'status', 'created_at']} updateStatus={updateStatus} deleteRecord={deleteRecord} formatDate={formatDate} StatusBadge={StatusBadge} />}
+        {tab === 'partners' && <DataTable title="Partner Registrations" data={partners} table="partner_registrations" columns={['full_name', 'village', 'district', 'phone', 'status', 'created_at']} updateStatus={updateStatus} deleteRecord={deleteRecord} formatDate={formatDate} StatusBadge={StatusBadge} />}
+        {tab === 'messages' && <DataTable title="Contact Messages" data={messages} table="contact_messages" columns={['full_name', 'subject', 'message', 'phone', 'status', 'created_at']} updateStatus={updateStatus} deleteRecord={deleteRecord} formatDate={formatDate} StatusBadge={StatusBadge} statuses={['unread', 'read', 'resolved']} />}
       </div>
     </div>
   );
 };
 
 // Reusable data table component
-function DataTable({ title, data, table, columns, updateStatus, formatDate, StatusBadge, statuses }: any) {
+function DataTable({ title, data, table, columns, updateStatus, deleteRecord, formatDate, StatusBadge, statuses }: any) {
   const defaultStatuses = statuses || ['pending', 'confirmed', 'completed', 'cancelled'];
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
 
@@ -266,7 +314,7 @@ function DataTable({ title, data, table, columns, updateStatus, formatDate, Stat
         </div>
       ) : (
         <div style={{ background: 'white', borderRadius: 'var(--radius)', boxShadow: 'var(--shadow)', overflow: 'hidden' }}>
-          <div style={{ overflowX: 'auto' }}>
+          <div className="admin-table-scroll">
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
                 <tr style={{ background: '#f8f9fa' }}>
@@ -288,11 +336,20 @@ function DataTable({ title, data, table, columns, updateStatus, formatDate, Stat
                         </td>
                       ))}
                       <td style={{ padding: '12px 16px' }}>
-                        <select value={row.status} onChange={e => { e.stopPropagation(); updateStatus(table, row.id, e.target.value); }}
-                          onClick={e => e.stopPropagation()}
-                          style={{ padding: '6px 10px', borderRadius: 8, border: '1px solid #e5e7eb', fontSize: 13, cursor: 'pointer', fontFamily: 'inherit' }}>
-                          {defaultStatuses.map((s: string) => <option key={s} value={s}>{s}</option>)}
-                        </select>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                          <select value={row.status} onChange={e => { e.stopPropagation(); updateStatus(table, row.id, e.target.value); }}
+                            onClick={e => e.stopPropagation()}
+                            style={{ padding: '6px 10px', borderRadius: 8, border: '1px solid #e5e7eb', fontSize: 13, cursor: 'pointer', fontFamily: 'inherit' }}>
+                            {defaultStatuses.map((s: string) => <option key={s} value={s}>{s}</option>)}
+                          </select>
+                          <button
+                            className="btn btn-outline btn-sm"
+                            style={{ color: '#dc2626', borderColor: '#fecaca' }}
+                            onClick={e => { e.stopPropagation(); deleteRecord(table, row.id); }}
+                          >
+                            Delete
+                          </button>
+                        </div>
                       </td>
                     </tr>
                     {expandedRow === row.id && (

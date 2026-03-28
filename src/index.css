@@ -703,6 +703,64 @@ body::before {
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
 .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
 
+/* ==================== ADMIN ==================== */
+.admin-page {
+  min-height: 100vh;
+  padding-top: 80px;
+  background: #f8f9fa;
+  scroll-behavior: smooth;
+}
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.admin-header-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.admin-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 32px;
+  overflow-x: auto;
+  background: white;
+  border-radius: var(--radius);
+  padding: 4px;
+  box-shadow: var(--shadow);
+}
+.admin-tabs,
+.admin-table-scroll {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+.admin-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+.admin-activity-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 24px;
+  border-bottom: 1px solid #f3f4f6;
+}
+.admin-activity-meta {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-left: 12px;
+}
+body.admin-mode::before {
+  animation: none;
+  opacity: 0.45;
+}
+
 /* ==================== STATS — 3D Glass Cards ==================== */
 .stats-row {
   display: grid;
@@ -1101,6 +1159,7 @@ body::before {
   .steps-grid::before { display: none; }
   .footer-grid { grid-template-columns: repeat(2, 1fr); }
   .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .admin-overview-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 768px) {
@@ -1133,4 +1192,8 @@ body::before {
   .price-card.featured:hover { transform: translateY(-8px); }
   .section { padding: 60px 0; }
   .stat-number { font-size: 40px; }
+  .admin-header { flex-direction: column; align-items: flex-start; }
+  .admin-overview-grid { grid-template-columns: 1fr; }
+  .admin-activity-row { flex-direction: column; align-items: flex-start; }
+  .admin-activity-meta { margin-left: 0; display: block; margin-top: 4px; }
 }

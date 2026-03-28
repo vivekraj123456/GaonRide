@@ -8,7 +8,6 @@ import {
   Shield, Heart, ChevronRight, ArrowRight, Truck, CalendarHeart
 } from 'lucide-react';
 import { ParticlesBg, Tilt3D } from '../components/Effects3D';
-import { heroVillage, serviceTent, serviceCatering, serviceCar, partnerRickshaw } from '../assets/images';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -85,9 +84,9 @@ const HomePage: React.FC = () => {
   return (
     <>
       {/* HERO */}
-      <section className="hero">
+      <section className="hero" style={{ position: 'relative' }}>
         <div className="hero-bg">
-          <img src={heroVillage} alt="GaonRide Village Transport" />
+          <img src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=2070&q=80" alt="GaonRide Village Transport" />
         </div>
         <div className="hero-overlay" />
         <ParticlesBg />
@@ -99,16 +98,15 @@ const HomePage: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <p style={{ color: 'var(--accent)', fontWeight: 600, fontSize: 16, marginBottom: 12, letterSpacing: 2, textTransform: 'uppercase' }}>
-                India's #1 Village Transport Platform
+                Empowering Rural India
               </p>
               <h1>
-                Ride ?? Delivery ??<br />
-                <span className="highlight">Wedding Services</span><br />
-                for Every Village
+                Your Village, <br />
+                <span className="highlight">Connected</span> to the World
               </h1>
               <p>
-                Book Now with GaonRide! We bring auto-rickshaws, SUVs, deliveries, and full wedding
-                event planning right to your doorstep - no matter how remote your village is.
+                From reliable daily rides and quick parcel deliveries to complete wedding 
+                planning — GaonRide brings top-tier services directly to your doorstep.
               </p>
               <div className="hero-cta">
                 <Link to="/rides" className="btn btn-accent btn-lg">
@@ -144,6 +142,13 @@ const HomePage: React.FC = () => {
               </Link>
             </motion.div>
           </div>
+        </div>
+        <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', overflow: 'hidden', lineHeight: 0, zIndex: 1, pointerEvents: 'none' }}>
+          <svg viewBox="0 0 1440 320" style={{ display: 'block', width: '100%', height: '120px' }} preserveAspectRatio="none">
+            <path fill="rgba(255,255,255,0.02)" d="M0,160L48,170.7C96,181,192,203,288,197.3C384,192,480,160,576,149.3C672,139,768,149,864,170.7C960,192,1056,224,1152,229.3C1248,235,1344,213,1392,202.7L1440,192L1440,320L0,320Z"></path>
+            <path fill="rgba(255,255,255,0.04)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,165.3C960,192,1056,224,1152,213.3C1248,203,1344,149,1392,122.7L1440,96L1440,320L0,320Z"></path>
+            <path fill="rgba(255,255,255,0.08)" d="M0,224L48,213.3C96,203,192,181,288,186.7C384,192,480,224,576,218.7C672,213,768,171,864,160C960,149,1056,171,1152,186.7C1248,203,1344,213,1392,218.7L1440,224L1440,320L0,320Z"></path>
+          </svg>
         </div>
       </section>
 
@@ -208,10 +213,10 @@ const HomePage: React.FC = () => {
           </div>
           <div className="grid-4">
             {[
-              { img: serviceCar, title: 'Village Rides', desc: 'Auto, Bolero, SUV — comfortable rides connecting villages to towns and cities.', link: '/rides', tag: 'Most Popular' },
-              { img: serviceCatering, title: 'Parcel & Grocery', desc: 'Send parcels or get fresh groceries delivered right to your village doorstep.', link: '/deliveries', tag: 'Fast Delivery' },
-              { img: serviceTent, title: 'Event Planning', desc: 'Tent, decor, DJ, catering — complete wedding and event solutions in one place.', link: '/events', tag: 'Full Service' },
-              { img: partnerRickshaw, title: 'Earn with Us', desc: 'Own a vehicle? Join GaonRide as a partner driver and earn daily income.', link: '/partner', tag: 'Join Now' },
+              { img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mahindra_Bolero_Gen_3.jpg', title: 'Village Rides', desc: 'Auto, Bolero, SUV — comfortable rides connecting villages to towns and cities.', link: '/rides', tag: 'Most Popular' },
+              { img: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80', title: 'Parcel & Grocery', desc: 'Send parcels or get fresh groceries delivered right to your village doorstep.', link: '/deliveries', tag: 'Fast Delivery' },
+              { img: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80', title: 'Event Planning', desc: 'Tent, decor, DJ, catering — complete wedding and event solutions in one place.', link: '/events', tag: 'Full Service' },
+              { img: 'https://images.unsplash.com/photo-1516733968668-dbdce39c4651?auto=format&fit=crop&w=800&q=80', title: 'Earn with Us', desc: 'Own a vehicle? Join GaonRide as a partner driver and earn daily income.', link: '/partner', tag: 'Join Now' },
             ].map((s, i) => (
               <Link to={s.link} key={i} style={{ textDecoration: 'none' }}>
                 <div className="card-3d">
@@ -234,8 +239,13 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* WHY CHOOSE US */}
-      <section className="section">
-        <div className="container">
+      <section className="section" style={{ position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', bottom: -100, left: -100, opacity: 0.03, zIndex: 0, pointerEvents: 'none', transform: 'scale(1.5)' }}>
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="400" height="400">
+            <path fill="var(--primary)" d="M42.7,-73.4C55.9,-67.8,67.6,-56.3,74.9,-42.6C82.2,-28.9,85.1,-13,83.1,2.1C81.1,17.2,74.2,31.5,64.2,43.3C54.2,55.1,41.1,64.4,26.7,70.5C12.3,76.6,-3.4,79.5,-18.2,76C-33,72.5,-46.9,62.6,-58.3,50.3C-69.7,38,-78.6,23.3,-81.9,7.4C-85.2,-8.5,-82.9,-25.6,-74.3,-39.8C-65.7,-54,-50.8,-65.3,-36,-70.6C-21.2,-75.9,-6.5,-75.2,7.3,-84.3C21,-93.4,30,-99.8,42.7,-73.4Z" transform="translate(100 100)" />
+          </svg>
+        </div>
+        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <div className="section-header">
             <h2>Why Villages <span>Love</span> GaonRide</h2>
             <p>We understand rural India like no one else.</p>
