@@ -3,6 +3,10 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import { ToastProvider } from './components/Toast';
+import { LanguageProvider } from './components/LanguageContext';
+import WhatsAppButton from './components/WhatsAppButton';
+import BackToTop from './components/BackToTop';
+import InstallBanner from './components/InstallBanner';
 import HomePage from './pages/Home';
 import RidesPage from './pages/Rides';
 import DeliveriesPage from './pages/Deliveries';
@@ -23,6 +27,7 @@ function Layout() {
 
   return (
     <>
+      {!isAdmin && <InstallBanner />}
       {!isAdmin && <Navbar />}
       <ScrollToTop />
       <main>
@@ -37,6 +42,8 @@ function Layout() {
         </Routes>
       </main>
       {!isAdmin && <Footer />}
+      {!isAdmin && <WhatsAppButton />}
+      {!isAdmin && <BackToTop />}
     </>
   );
 }
@@ -44,9 +51,11 @@ function Layout() {
 const App: React.FC = () => {
   return (
     <Router>
-      <ToastProvider>
-        <Layout />
-      </ToastProvider>
+      <LanguageProvider>
+        <ToastProvider>
+          <Layout />
+        </ToastProvider>
+      </LanguageProvider>
     </Router>
   );
 };

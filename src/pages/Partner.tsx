@@ -94,7 +94,7 @@ const PartnerPage: React.FC = () => {
   return (
     <>
       <section className="hero" style={{minHeight:'60vh', position: 'relative'}}>
-        <div className="hero-bg"><img src="https://images.unsplash.com/photo-1516733968668-dbdce39c4651?auto=format&fit=crop&w=2000&q=80" alt="Partner"/></div>
+        <div className="hero-bg"><img src="/village_partner_hero.png" alt="Partner"/></div>
         <div className="hero-overlay"/>
         <div className="container">
           <div className="partner-hero hero-content" style={{paddingTop:140}}>

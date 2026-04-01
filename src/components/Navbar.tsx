@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Navigation, Menu, X } from 'lucide-react';
+import { Navigation, Menu, X, Languages } from 'lucide-react';
+import { useLanguage } from './LanguageContext';
 
 const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  const { lang, setLang, t } = useLanguage();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -18,13 +20,15 @@ const Navbar: React.FC = () => {
   }, [location]);
 
   const links = [
-    { to: '/', label: 'Home' },
-    { to: '/rides', label: 'Rides' },
-    { to: '/deliveries', label: 'Deliveries' },
-    { to: '/events', label: 'Events' },
-    { to: '/partner', label: 'Become a Partner' },
-    { to: '/contact', label: 'Contact' },
+    { to: '/', label: t('nav.home') },
+    { to: '/rides', label: t('nav.rides') },
+    { to: '/deliveries', label: t('nav.deliveries') },
+    { to: '/events', label: t('nav.events') },
+    { to: '/partner', label: t('nav.partner') },
+    { to: '/contact', label: t('nav.contact') },
   ];
+
+  const toggleLang = () => setLang(lang === 'en' ? 'hi' : 'en');
 
   return (
     <>
@@ -48,7 +52,11 @@ const Navbar: React.FC = () => {
           </nav>
 
           <div className="nav-right">
-            <Link to="/rides" className="btn btn-primary btn-sm">Book Now</Link>
+            <button className="lang-toggle" onClick={toggleLang} title="Switch language">
+              <Languages size={16} />
+              {lang === 'en' ? 'हिं' : 'EN'}
+            </button>
+            <Link to="/rides" className="btn btn-primary btn-sm">{t('nav.bookNow')}</Link>
             <button className="mobile-toggle" onClick={() => setMenuOpen(true)}>
               <Menu size={28} />
             </button>
@@ -67,6 +75,10 @@ const Navbar: React.FC = () => {
         {links.map(l => (
           <Link key={l.to} to={l.to}>{l.label}</Link>
         ))}
+        <button className="lang-toggle" onClick={toggleLang} style={{ marginTop: 16 }}>
+          <Languages size={18} />
+          {lang === 'en' ? 'हिंदी में बदलें' : 'Switch to English'}
+        </button>
       </div>
     </>
   );

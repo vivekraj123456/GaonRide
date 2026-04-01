@@ -11,10 +11,33 @@ const DeliveriesPage: React.FC = () => {
   const { showToast } = useToast();
   const [tab, setTab] = useState<'parcel'|'grocery'>('parcel');
   const [openFaq, setOpenFaq] = useState<number|null>(null);
+  const [trackPhone, setTrackPhone] = useState('');
+  const [trackResults, setTrackResults] = useState<any[] | null>(null);
+  const [tracking, setTracking] = useState(false);
 
   useConfirmationNotifications({ table: 'delivery_orders', label: 'Delivery', showToast });
 
   useEffect(() => { window.scrollTo(0,0); gsap.fromTo('.del-hero',{opacity:0,y:30},{opacity:1,y:0,duration:0.8}); }, []);
+
+  const handleTrack = async () => {
+    if (!trackPhone.trim()) return;
+    setTracking(true);
+    try {
+      const { data, error } = await supabase
+        .from('delivery_orders')
+        .select('type, delivery_address, status, created_at')
+        .eq('phone', trackPhone.trim())
+        .order('created_at', { ascending: false })
+        .limit(5);
+      if (error) throw error;
+      setTrackResults(data || []);
+    } catch {
+      showToast('❌ Error tracking. Please try again.');
+      setTrackResults(null);
+    }
+    setTracking(false);
+  };
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,7 +76,7 @@ const DeliveriesPage: React.FC = () => {
   return (
     <>
       <section className="hero" style={{minHeight:'60vh', position: 'relative'}}>
-        <div className="hero-bg"><img src="https://images.unsplash.com/photo-1608686207856-001b95cf60ca?auto=format&fit=crop&w=2000&q=80" alt="Deliveries"/></div>
+        <div className="hero-bg"><img src="/village_delivery_hero.png" alt="Village Delivery" /></div>
         <div className="hero-overlay"/>
         <div className="container">
           <div className="del-hero hero-content" style={{paddingTop:140}}>
@@ -161,7 +184,48 @@ const DeliveriesPage: React.FC = () => {
         </div>
       </section>
 
+      {/* TRACK ORDER */}
       <section className="section">
+        <div className="container" style={{maxWidth:700}}>
+          <div className="section-header"><h2>Track My <span>Order</span></h2><p>Enter your phone number to check delivery status.</p></div>
+          <div className="form-card" style={{boxShadow:'0 20px 60px rgba(0,0,0,0.12)'}}>
+            <div style={{display:'flex',gap:12}}>
+              <input
+                className="form-input"
+                type="tel"
+                placeholder="+91 XXXXX XXXXX"
+                value={trackPhone}
+                onChange={e => setTrackPhone(e.target.value)}
+                style={{flex:1}}
+              />
+              <button className="btn btn-primary" onClick={handleTrack} disabled={tracking}>
+                {tracking ? '...' : '🔍 Track'}
+              </button>
+            </div>
+            {trackResults && trackResults.length > 0 && (
+              <div style={{marginTop:24}}>
+                {trackResults.map((r: any, i: number) => (
+                  <div key={i} className="track-result-card">
+                    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:8}}>
+                      <span style={{fontWeight:700,fontSize:15}}>{r.type === 'parcel' ? '📦 Parcel' : '🥬 Grocery'}</span>
+                      <span className={`track-status ${r.status}`}>{r.status === 'confirmed' ? '✅ Confirmed' : r.status === 'rejected' ? '❌ Rejected' : '⏳ Pending'}</span>
+                    </div>
+                    <div style={{fontSize:13,color:'var(--text-muted)'}}>
+                      <div>To: {r.delivery_address || '—'}</div>
+                      <div>Placed: {new Date(r.created_at).toLocaleString('en-IN', {dateStyle:'medium',timeStyle:'short'})}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            {trackResults && trackResults.length === 0 && (
+              <p style={{marginTop:20,textAlign:'center',color:'var(--text-muted)'}}>No orders found for this number.</p>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-alt">
         <div className="container" style={{maxWidth:800}}>
           <div className="section-header"><h2>Delivery <span>FAQ</span></h2></div>
           {faqs.map((f,i)=>(

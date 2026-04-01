@@ -51,8 +51,8 @@ const Footer: React.FC = () => {
           <div>
             <h4>Contact Info</h4>
             <div className="footer-links">
-              <a href="tel:+919876543210" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <Phone size={14} /> +91 98765 43210
+              <a href="tel:+917301132018" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <Phone size={14} /> +91 73011 32018
               </a>
               <a href="mailto:info@gaonride.com" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <Mail size={14} /> info@gaonride.com

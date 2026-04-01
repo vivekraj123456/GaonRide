@@ -5,7 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   Car, Package, Music, Tent, Star, Users, MapPin, Clock,
-  Shield, Heart, ChevronRight, ArrowRight, Truck, CalendarHeart
+  Shield, Heart, ChevronRight, ArrowRight, Truck, CalendarHeart, Phone, Flame, Navigation
 } from 'lucide-react';
 import { ParticlesBg, Tilt3D } from '../components/Effects3D';
 
@@ -86,7 +86,11 @@ const HomePage: React.FC = () => {
       {/* HERO */}
       <section className="hero" style={{ position: 'relative' }}>
         <div className="hero-bg">
-          <img src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=2070&q=80" alt="GaonRide Village Transport" />
+          <img 
+            src="/village1.jpg" 
+            alt="GaonRide Village Transport" 
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+          />
         </div>
         <div className="hero-overlay" />
         <ParticlesBg />
@@ -105,8 +109,7 @@ const HomePage: React.FC = () => {
                 <span className="highlight">Connected</span> to the World
               </h1>
               <p>
-                From reliable daily rides and quick parcel deliveries to complete wedding 
-                planning — GaonRide brings top-tier services directly to your doorstep.
+                From reliable daily rides and quick parcel deliveries to complete wedding planning — GaonRide brings top-tier services directly to your doorstep.
               </p>
               <div className="hero-cta">
                 <Link to="/rides" className="btn btn-accent btn-lg">
@@ -180,6 +183,48 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
+      {/* EMERGENCY SOS */}
+      <section className="emergency-strip">
+        <div className="container">
+          <div className="emergency-inner">
+            <div className="emergency-header">
+              <Shield color="#e53e3e" size={24} />
+              <h3>Emergency Contacts</h3>
+            </div>
+            <div className="emergency-buttons">
+              <a href="tel:108" className="emergency-btn">
+                <div className="emergency-icon-box"><Phone size={24} /></div>
+                <div className="emergency-info">
+                  <span className="emergency-name">Ambulance</span>
+                  <span className="emergency-number">108</span>
+                </div>
+              </a>
+              <a href="tel:100" className="emergency-btn">
+                <div className="emergency-icon-box"><Shield size={24} /></div>
+                <div className="emergency-info">
+                  <span className="emergency-name">Police</span>
+                  <span className="emergency-number">100</span>
+                </div>
+              </a>
+              <a href="tel:101" className="emergency-btn">
+                <div className="emergency-icon-box"><Flame size={24} /></div>
+                <div className="emergency-info">
+                  <span className="emergency-name">Fire Brigade</span>
+                  <span className="emergency-number">101</span>
+                </div>
+              </a>
+              <a href="tel:+917301132018" className="emergency-btn">
+                <div className="emergency-icon-box"><Navigation size={24} /></div>
+                <div className="emergency-info">
+                  <span className="emergency-name">GaonRide Help</span>
+                  <span className="emergency-number">Support</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* HOW IT WORKS */}
       <section className="section">
         <div className="container">
@@ -213,10 +258,10 @@ const HomePage: React.FC = () => {
           </div>
           <div className="grid-4">
             {[
-              { img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mahindra_Bolero_Gen_3.jpg', title: 'Village Rides', desc: 'Auto, Bolero, SUV — comfortable rides connecting villages to towns and cities.', link: '/rides', tag: 'Most Popular' },
-              { img: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80', title: 'Parcel & Grocery', desc: 'Send parcels or get fresh groceries delivered right to your village doorstep.', link: '/deliveries', tag: 'Fast Delivery' },
-              { img: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80', title: 'Event Planning', desc: 'Tent, decor, DJ, catering — complete wedding and event solutions in one place.', link: '/events', tag: 'Full Service' },
-              { img: 'https://images.unsplash.com/photo-1516733968668-dbdce39c4651?auto=format&fit=crop&w=800&q=80', title: 'Earn with Us', desc: 'Own a vehicle? Join GaonRide as a partner driver and earn daily income.', link: '/partner', tag: 'Join Now' },
+              { img: '/service_rides.png', title: 'Village Rides', desc: 'Auto, Bolero, SUV — comfortable rides connecting villages to towns and cities.', link: '/rides', tag: 'Most Popular' },
+              { img: '/service_delivery.png', title: 'Parcel & Grocery', desc: 'Send parcels or get fresh groceries delivered right to your village doorstep.', link: '/deliveries', tag: 'Fast Delivery' },
+              { img: '/service_events.png', title: 'Event Planning', desc: 'Tent, decor, DJ, catering — complete wedding and event solutions in one place.', link: '/events', tag: 'Full Service' },
+              { img: '/service_partner.png', title: 'Earn with Us', desc: 'Own a vehicle? Join GaonRide as a partner driver and earn daily income.', link: '/partner', tag: 'Join Now' },
             ].map((s, i) => (
               <Link to={s.link} key={i} style={{ textDecoration: 'none' }}>
                 <div className="card-3d">

@@ -1,4 +1,4 @@
-﻿
+
 import React, { useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { Phone, Mail, MapPin, MessageCircle, ChevronDown, Send, Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
@@ -36,8 +36,8 @@ const ContactPage: React.FC = () => {
   };
 
   const contactInfo = [
-    { icon: <Phone size={24} />, title: 'Call Us', info: '+91 98765 43210', sub: 'Mon-Sat, 8am-10pm IST', action: 'tel:+919876543210' },
-    { icon: <MessageCircle size={24} />, title: 'WhatsApp', info: '+91 98765 43210', sub: 'Quick replies, 24/7', action: 'https://wa.me/919876543210' },
+    { icon: <Phone size={24} />, title: 'Call Us', info: '+91 73011 32018', sub: 'Mon-Sat, 8am-10pm IST', action: 'tel:+917301132018' },
+    { icon: <MessageCircle size={24} />, title: 'WhatsApp', info: '+91 73011 32018', sub: 'Quick replies, 24/7', action: 'https://wa.me/917301132018' },
     { icon: <Mail size={24} />, title: 'Email Us', info: 'info@gaonride.com', sub: 'Response within 24 hrs', action: 'mailto:info@gaonride.com' },
     { icon: <MapPin size={24} />, title: 'Head Office', info: 'Village Bhawan, Gram Panchayat Road', sub: 'Lucknow, Uttar Pradesh 226001', action: '#' },
   ];
@@ -50,7 +50,7 @@ const ContactPage: React.FC = () => {
   ];
 
   const faqs = [
-    { q: 'How can I reach customer support?', a: 'You can call us at +91 98765 43210, WhatsApp us anytime, or fill the contact form above. Our average response time is under 30 minutes during working hours.' },
+    { q: 'How can I reach customer support?', a: 'You can call us at +91 73011 32018, WhatsApp us anytime, or fill the contact form above. Our average response time is under 30 minutes during working hours.' },
     { q: 'I have a complaint about a driver. How do I report it?', a: 'Please call our helpline or fill the form with subject "Driver Complaint". Include the ride date, time, and driver name if known. We take every complaint seriously and resolve within 48 hours.' },
     { q: 'Can I visit your office?', a: 'Yes! Our head office in Lucknow is open during office hours. We also have village coordinators across UP, Bihar, MP, and Rajasthan whom you can meet locally.' },
     { q: 'Do you operate in my village?', a: "We are expanding rapidly! Currently we cover 500+ villages across UP, Bihar, MP, and Rajasthan. Contact us with your village name and we'll let you know or prioritize expansion to your area." },
@@ -60,7 +60,7 @@ const ContactPage: React.FC = () => {
   return (
     <>
       <section className="hero" style={{ minHeight: '50vh', position: 'relative' }}>
-        <div className="hero-bg"><img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=2000&q=80" alt="Community Support" /></div>
+        <div className="hero-bg"><img src="/village_contact_hero.png" alt="Community Support" /></div>
         <div className="hero-overlay" />
         <div className="container">
           <div className="contact-hero hero-content" style={{ paddingTop: 140 }}>

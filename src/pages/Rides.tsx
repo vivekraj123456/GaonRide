@@ -75,7 +75,7 @@ const RidesPage: React.FC = () => {
     <>
       {/* HERO */}
       <section className="hero" style={{ minHeight: '60vh', position: 'relative' }}>
-        <div className="hero-bg"><img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=2000&q=80" alt="Rides" /></div>
+        <div className="hero-bg"><img src="/ride3.png" alt="Rides" /></div>
         <div className="hero-overlay" />
         <div className="container">
           <div className="ride-hero-content hero-content" style={{ paddingTop: 140 }}>

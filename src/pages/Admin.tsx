@@ -289,7 +289,7 @@ const AdminPage: React.FC = () => {
         {/* DATA TABLES */}
         {tab === 'rides' && <DataTable title="Ride Bookings" data={rides} table="ride_bookings" columns={['pickup', 'drop_location', 'vehicle', 'phone', 'status', 'created_at']} updateStatus={updateStatus} deleteRecord={deleteRecord} formatDate={formatDate} StatusBadge={StatusBadge} />}
         {tab === 'deliveries' && <DataTable title="Delivery Orders" data={deliveries} table="delivery_orders" columns={['type', 'sender_name', 'delivery_address', 'phone', 'status', 'created_at']} updateStatus={updateStatus} deleteRecord={deleteRecord} formatDate={formatDate} StatusBadge={StatusBadge} />}
-        {tab === 'events' && <DataTable title="Event Quotes" data={events} table="event_quotes" columns={['full_name', 'event_type', 'event_date', 'phone', 'status', 'created_at']} updateStatus={updateStatus} deleteRecord={deleteRecord} formatDate={formatDate} StatusBadge={StatusBadge} />}
+        {tab === 'events' && <DataTable title="Event Quotes" data={events} table="event_quotes" columns={['full_name', 'event_type', 'event_date', 'phone', 'address', 'status', 'created_at']} updateStatus={updateStatus} deleteRecord={deleteRecord} formatDate={formatDate} StatusBadge={StatusBadge} />}
         {tab === 'partners' && <DataTable title="Partner Registrations" data={partners} table="partner_registrations" columns={['full_name', 'village', 'district', 'phone', 'status', 'created_at']} updateStatus={updateStatus} deleteRecord={deleteRecord} formatDate={formatDate} StatusBadge={StatusBadge} />}
         {tab === 'messages' && <DataTable title="Contact Messages" data={messages} table="contact_messages" columns={['full_name', 'subject', 'message', 'phone', 'status', 'created_at']} updateStatus={updateStatus} deleteRecord={deleteRecord} formatDate={formatDate} StatusBadge={StatusBadge} statuses={['unread', 'read', 'resolved']} />}
       </div>
@@ -354,10 +354,31 @@ function DataTable({ title, data, table, columns, updateStatus, deleteRecord, fo
                     </tr>
                     {expandedRow === row.id && (
                       <tr><td colSpan={columns.length + 1} style={{ padding: 24, background: '#f8f9fa' }}>
+                        <div style={{ marginBottom: 20, padding: 20, background: 'rgba(59, 130, 246, 0.05)', borderRadius: 12, border: '1px solid rgba(59, 130, 246, 0.1)' }}>
+                          <h4 style={{ fontSize: 13, textTransform: 'uppercase', letterSpacing: 1, color: 'var(--primary)', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <Users size={16} /> Customer Details
+                          </h4>
+                          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16 }}>
+                            {['full_name', 'phone', 'email', 'sender_name', 'village', 'district'].map(field => row[field] && (
+                              <div key={field}>
+                                <strong style={{ fontSize: 11, color: 'var(--text-muted)', textTransform: 'uppercase' }}>{field.replace(/_/g, ' ')}</strong>
+                                <p style={{ fontSize: 14, fontWeight: 600, marginTop: 4 }}>{String(row[field])}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 16 }}>
-                          {Object.entries(row).filter(([k]) => k !== 'id' && k !== '_type' && k !== '_table').map(([k, v]) => (
-                            <div key={k}><strong style={{ fontSize: 12, color: 'var(--text-muted)', textTransform: 'uppercase' }}>{k.replace(/_/g, ' ')}</strong>
-                              <p style={{ fontSize: 14, marginTop: 4 }}>{Array.isArray(v) ? (v as string[]).join(', ') : String(v || '—')}</p>
+                          {Object.entries(row).filter(([k]) => k !== 'id' && k !== '_type' && k !== '_table' && !['full_name', 'phone', 'email', 'sender_name', 'village', 'district'].includes(k)).map(([k, v]) => (
+                            <div key={k} style={{ gridColumn: k === 'special_requests' ? '1 / -1' : 'auto' }}>
+                              <strong style={{ fontSize: 11, color: 'var(--text-muted)', textTransform: 'uppercase' }}>{k.replace(/_/g, ' ')}</strong>
+                              {k === 'special_requests' && typeof v === 'string' && v.includes('ITEMIZED ORDER') ? (
+                                <div style={{ background: 'white', padding: 16, borderRadius: 12, marginTop: 8, border: '1px solid #e5e7eb', fontFamily: 'monospace', fontSize: 13, whiteSpace: 'pre-wrap', color: '#1e293b', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+                                  {v}
+                                </div>
+                              ) : (
+                                <p style={{ fontSize: 14, marginTop: 4 }}>{Array.isArray(v) ? (v as string[]).join(', ') : String(v || '—')}</p>
+                              )}
                             </div>
                           ))}
                         </div>

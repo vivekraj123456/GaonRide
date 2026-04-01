@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS event_quotes (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   full_name TEXT NOT NULL,
   phone TEXT NOT NULL,
+  address TEXT NOT NULL,
   event_type TEXT NOT NULL,
   event_date TEXT,
   expected_guests TEXT,
