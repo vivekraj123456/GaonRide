@@ -25,6 +25,7 @@ const Navbar: React.FC = () => {
     { to: '/deliveries', label: t('nav.deliveries') },
     { to: '/events', label: t('nav.events') },
     { to: '/partner', label: t('nav.partner') },
+    { to: '/deliveries#track', label: 'Track' },
     { to: '/contact', label: t('nav.contact') },
   ];
 

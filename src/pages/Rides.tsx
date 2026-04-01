@@ -7,6 +7,7 @@ import {
   Fuel, Users, Navigation, Bike, Truck as TruckIcon
 } from 'lucide-react';
 import { useToast } from '../components/Toast';
+import { useLanguage } from '../components/LanguageContext';
 import { supabase } from '../lib/supabase';
 import { addPendingConfirmation, requestBrowserNotificationPermission, useConfirmationNotifications } from '../hooks/useConfirmationNotifications';
 
@@ -21,9 +22,13 @@ const vehicles = [
 
 const RidesPage: React.FC = () => {
   const { showToast } = useToast();
+  const { t } = useLanguage();
   const [selectedVehicle, setSelectedVehicle] = useState('auto');
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [formData, setFormData] = useState({ pickup: '', drop: '', vehicle: 'auto', date: '', phone: '' });
+  const [trackPhone, setTrackPhone] = useState('');
+  const [trackResults, setTrackResults] = useState<any[] | null>(null);
+  const [tracking, setTracking] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   useConfirmationNotifications({ table: 'ride_bookings', label: 'Ride', showToast });
@@ -62,6 +67,35 @@ const RidesPage: React.FC = () => {
     }
     setSubmitting(false);
   };
+ 
+  const handleTrack = async () => {
+    if (!trackPhone.trim()) return;
+    setTracking(true);
+    try {
+      const { data, error } = await supabase
+        .from('ride_bookings')
+        .select('id, pickup, drop_location, status, created_at, vehicle')
+        .eq('phone', trackPhone.trim())
+        .order('created_at', { ascending: false })
+        .limit(5);
+      if (error) throw error;
+      setTrackResults(data || []);
+    } catch {
+      showToast('❌ Error tracking. Please try again.');
+      setTrackResults(null);
+    }
+    setTracking(false);
+  };
+ 
+  useEffect(() => {
+    if (!trackResults || trackResults.length === 0) return;
+    const channel = supabase.channel('rides-tracking')
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'ride_bookings', filter: `phone=eq.${trackPhone.trim()}` }, (payload) => {
+        setTrackResults(prev => prev?.map(r => r.id === payload.new.id ? { ...r, ...payload.new } : r) || null);
+      })
+      .subscribe();
+    return () => { supabase.removeChannel(channel); };
+  }, [trackResults, trackPhone]);
 
   const faqs = [
     { q: 'How do I book a ride?', a: 'Simply fill in the booking form above with your pickup and drop location, select a vehicle type, and submit. Our nearest driver will contact you within 2 minutes.' },
@@ -250,6 +284,69 @@ const RidesPage: React.FC = () => {
               {openFaq === i && <div className="faq-answer">{f.a}</div>}
             </div>
           ))}
+        </div>
+      </section>
+ 
+      {/* TRACK RIDE */}
+      <section className="section">
+        <div className="container" style={{maxWidth:700}}>
+          <div className="section-header">
+            <h2>{t('track.title')}</h2>
+            <p>{t('track.subtitle')}</p>
+          </div>
+          <div className="form-card" style={{boxShadow:'0 20px 60px rgba(0,0,0,0.12)'}}>
+            <div style={{display:'flex',gap:12}}>
+              <input
+                className="form-input"
+                type="tel"
+                placeholder={t('track.placeholder')}
+                value={trackPhone}
+                onChange={e => setTrackPhone(e.target.value)}
+                style={{flex:1}}
+              />
+              <button className="btn btn-primary" onClick={handleTrack} disabled={tracking}>
+                {tracking ? '...' : `🔍 ${t('track.button')}`}
+              </button>
+            </div>
+            {trackResults && trackResults.length > 0 && (
+              <div style={{marginTop:24}}>
+                {trackResults.map((r: any, i: number) => (
+                  <div key={i} className="track-result-card">
+                    <div className="track-header">
+                      <div className="track-type">
+                        <span>🚗</span>
+                        {r.vehicle?.toUpperCase() || 'RIDE'}
+                      </div>
+                      <span className={`track-status status-${r.status}`}>
+                        {r.status === 'confirmed' ? `✅ ${t('track.status.confirmed')}` : 
+                         r.status === 'completed' ? `🏁 ${t('track.status.completed')}` : 
+                         r.status === 'cancelled' ? `❌ ${t('track.status.cancelled')}` : 
+                         `⏳ ${t('track.status.pending')}`}
+                      </span>
+                    </div>
+                    
+                    <div className="track-details">
+                      <div className="track-field">
+                        <span>From:</span>
+                        <span>{r.pickup}</span>
+                      </div>
+                      <div className="track-field">
+                        <span>To:</span>
+                        <span>{r.drop_location}</span>
+                      </div>
+                      <div className="track-field" style={{ textAlign: 'right' }}>
+                        <span>Booked:</span>
+                        <span>{new Date(r.created_at).toLocaleString('en-IN', {dateStyle:'medium',timeStyle:'short'})}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            {trackResults && trackResults.length === 0 && (
+              <p style={{marginTop:20,textAlign:'center',color:'var(--text-muted)'}}>{t('track.noResults')}</p>
+            )}
+          </div>
         </div>
       </section>
     </>

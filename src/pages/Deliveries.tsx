@@ -3,12 +3,14 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Package, ShoppingCart, Clock, MapPin, Shield, ChevronDown, Truck, Box, ArrowRight, CheckCircle } from 'lucide-react';
 import { useToast } from '../components/Toast';
+import { useLanguage } from '../components/LanguageContext';
 import { supabase } from '../lib/supabase';
 import { addPendingConfirmation, requestBrowserNotificationPermission, useConfirmationNotifications } from '../hooks/useConfirmationNotifications';
 gsap.registerPlugin(ScrollTrigger);
 
 const DeliveriesPage: React.FC = () => {
   const { showToast } = useToast();
+  const { t } = useLanguage();
   const [tab, setTab] = useState<'parcel'|'grocery'>('parcel');
   const [openFaq, setOpenFaq] = useState<number|null>(null);
   const [trackPhone, setTrackPhone] = useState('');
@@ -25,7 +27,7 @@ const DeliveriesPage: React.FC = () => {
     try {
       const { data, error } = await supabase
         .from('delivery_orders')
-        .select('type, delivery_address, status, created_at')
+        .select('id, type, delivery_address, status, created_at')
         .eq('phone', trackPhone.trim())
         .order('created_at', { ascending: false })
         .limit(5);
@@ -37,6 +39,16 @@ const DeliveriesPage: React.FC = () => {
     }
     setTracking(false);
   };
+ 
+  useEffect(() => {
+    if (!trackResults || trackResults.length === 0) return;
+    const channel = supabase.channel('delivery-tracking')
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'delivery_orders', filter: `phone=eq.${trackPhone.trim()}` }, (payload) => {
+        setTrackResults(prev => prev?.map(r => r.id === payload.new.id ? { ...r, ...payload.new } : r) || null);
+      })
+      .subscribe();
+    return () => { supabase.removeChannel(channel); };
+  }, [trackResults, trackPhone]);
 
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -187,39 +199,54 @@ const DeliveriesPage: React.FC = () => {
       {/* TRACK ORDER */}
       <section className="section">
         <div className="container" style={{maxWidth:700}}>
-          <div className="section-header"><h2>Track My <span>Order</span></h2><p>Enter your phone number to check delivery status.</p></div>
+          <div className="section-header"><h2>{t('track.title')}</h2><p>{t('track.subtitle')}</p></div>
           <div className="form-card" style={{boxShadow:'0 20px 60px rgba(0,0,0,0.12)'}}>
             <div style={{display:'flex',gap:12}}>
               <input
                 className="form-input"
                 type="tel"
-                placeholder="+91 XXXXX XXXXX"
+                placeholder={t('track.placeholder')}
                 value={trackPhone}
                 onChange={e => setTrackPhone(e.target.value)}
                 style={{flex:1}}
               />
               <button className="btn btn-primary" onClick={handleTrack} disabled={tracking}>
-                {tracking ? '...' : '🔍 Track'}
+                {tracking ? '...' : `🔍 ${t('track.button')}`}
               </button>
             </div>
             {trackResults && trackResults.length > 0 && (
               <div style={{marginTop:24}}>
                 {trackResults.map((r: any, i: number) => (
                   <div key={i} className="track-result-card">
-                    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:8}}>
-                      <span style={{fontWeight:700,fontSize:15}}>{r.type === 'parcel' ? '📦 Parcel' : '🥬 Grocery'}</span>
-                      <span className={`track-status ${r.status}`}>{r.status === 'confirmed' ? '✅ Confirmed' : r.status === 'rejected' ? '❌ Rejected' : '⏳ Pending'}</span>
+                    <div className="track-header">
+                      <div className="track-type">
+                        <span>{r.type === 'parcel' ? '📦' : '🥬'}</span>
+                        {r.type === 'parcel' ? t('track.parcel') : t('track.grocery')}
+                      </div>
+                      <span className={`track-status status-${r.status}`}>
+                        {r.status === 'confirmed' ? `✅ ${t('track.status.confirmed')}` : 
+                         r.status === 'completed' ? `🏁 ${t('track.status.delivered')}` : 
+                         r.status === 'cancelled' || r.status === 'rejected' ? `❌ ${t('track.status.cancelled')}` : 
+                         `⏳ ${t('track.status.pending')}`}
+                      </span>
                     </div>
-                    <div style={{fontSize:13,color:'var(--text-muted)'}}>
-                      <div>To: {r.delivery_address || '—'}</div>
-                      <div>Placed: {new Date(r.created_at).toLocaleString('en-IN', {dateStyle:'medium',timeStyle:'short'})}</div>
+                    
+                    <div className="track-details">
+                      <div className="track-field">
+                        <span>To:</span>
+                        <span>{r.delivery_address || '—'}</span>
+                      </div>
+                      <div className="track-field" style={{ textAlign: 'right' }}>
+                        <span>Placed:</span>
+                        <span>{new Date(r.created_at).toLocaleString('en-IN', {dateStyle:'medium',timeStyle:'short'})}</span>
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
             )}
             {trackResults && trackResults.length === 0 && (
-              <p style={{marginTop:20,textAlign:'center',color:'var(--text-muted)'}}>No orders found for this number.</p>
+              <p style={{marginTop:20,textAlign:'center',color:'var(--text-muted)'}}>{t('track.noResults')}</p>
             )}
           </div>
         </div>

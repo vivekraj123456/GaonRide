@@ -8,6 +8,7 @@ import {
   Shield, Heart, ChevronRight, ArrowRight, Truck, CalendarHeart, Phone, Flame, Navigation
 } from 'lucide-react';
 import { ParticlesBg, Tilt3D } from '../components/Effects3D';
+import VillageHub from '../components/VillageHub';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -282,6 +283,9 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* VILLAGE HUB */}
+      <VillageHub />
 
       {/* WHY CHOOSE US */}
       <section className="section" style={{ position: 'relative', overflow: 'hidden' }}>

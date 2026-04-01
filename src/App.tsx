@@ -14,6 +14,8 @@ import EventsPage from './pages/Events';
 import PartnerPage from './pages/Partner';
 import ContactPage from './pages/Contact';
 import AdminPage from './pages/Admin';
+import ChaupalPage from './pages/Chaupal';
+import WeatherPage from './pages/Weather';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -38,6 +40,8 @@ function Layout() {
           <Route path="/events" element={<EventsPage />} />
           <Route path="/partner" element={<PartnerPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/chaupal" element={<ChaupalPage />} />
+          <Route path="/weather" element={<WeatherPage />} />
           <Route path="/admin" element={<AdminPage />} />
         </Routes>
       </main>
