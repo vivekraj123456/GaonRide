@@ -749,6 +749,29 @@ body::before {
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
 }
+.admin-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+}
+.admin-data-table {
+  min-width: 1180px;
+}
+.admin-data-table th,
+.admin-data-table td {
+  vertical-align: top;
+}
+.admin-actions-col {
+  position: sticky;
+  right: 0;
+  background: #fff;
+  z-index: 2;
+  box-shadow: -8px 0 10px -10px rgba(15, 23, 42, 0.45);
+}
+.admin-data-table thead .admin-actions-col {
+  background: #f8f9fa;
+  z-index: 3;
+}
 .admin-overview-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -1883,4 +1906,5 @@ body.admin-mode::before {
   .whatsapp-float { width: 54px; height: 54px; bottom: 20px; right: 20px; }
   .whatsapp-tooltip { display: none; }
   .back-to-top { width: 44px; height: 44px; bottom: 85px; right: 20px; }
+  .admin-data-table { min-width: 980px; }
 }

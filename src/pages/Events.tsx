@@ -42,6 +42,8 @@ const EventsPage: React.FC = () => {
   const [selectedItems, setSelectedItems] = useState<Record<string, Record<string, number>>>({});
   const [activeModal, setActiveModal] = useState<string | null>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [venueCoords, setVenueCoords] = useState<{ lat: number; lng: number } | null>(null);
+  const [locationLoading, setLocationLoading] = useState(false);
 
   useConfirmationNotifications({ table: 'event_quotes', label: 'Event', showToast });
 
@@ -83,6 +85,10 @@ const EventsPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!venueCoords) {
+      showToast('Location sharing is mandatory. Tap "Use Current Location" first.');
+      return;
+    }
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
     const selectedServices = Object.entries(services).filter(([, v]) => v).map(([k]) => k);
@@ -106,6 +112,8 @@ const EventsPage: React.FC = () => {
         event_type: formData.get('event_type') as string,
         event_date: formData.get('event_date') as string,
         expected_guests: formData.get('expected_guests') as string,
+        venue_lat: venueCoords?.lat ?? null,
+        venue_lng: venueCoords?.lng ?? null,
         services: selectedServices,
         special_requests: cartEntries.length > 0 
           ? `ITEMIZED ORDER:\n${detailedList}\n\nTOTAL ESTIMATED: ₹${totalEstimated}\n\nUSER NOTE: ${formData.get('special_requests') || 'None'}`
@@ -123,6 +131,22 @@ const EventsPage: React.FC = () => {
       showToast('❌ Error submitting. Please try again.');
       console.error(err);
     }
+  };
+
+  const captureVenueLocation = () => {
+    if (!navigator.geolocation) {
+      showToast('Geolocation not supported in this browser.');
+      return;
+    }
+    setLocationLoading(true);
+    navigator.geolocation.getCurrentPosition(({ coords }) => {
+      setVenueCoords({ lat: coords.latitude, lng: coords.longitude });
+      setLocationLoading(false);
+      showToast('Event location captured.');
+    }, () => {
+      setLocationLoading(false);
+      showToast('Could not capture location.');
+    }, { enableHighAccuracy: true, timeout: 10000 });
   };
 
   const serviceCards = [
@@ -302,6 +326,13 @@ const EventsPage: React.FC = () => {
                       <label>Address</label>
                       <input name="address" className="form-input" placeholder="Delivery/Event address" required />
                     </div>
+                    <div style={{ marginBottom: 14, display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
+                      <button type="button" className="btn btn-outline-accent btn-sm" onClick={captureVenueLocation}>
+                        {locationLoading ? 'Locating...' : 'Use Current Location'}
+                      </button>
+                      {venueCoords && <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{venueCoords.lat.toFixed(5)}, {venueCoords.lng.toFixed(5)}</span>}
+                    </div>
+                    {!venueCoords && <p style={{ marginBottom: 12, fontSize: 12, color: '#b45309' }}>Location sharing is mandatory for nearest partner assignment.</p>}
                     <div className="form-group">
                       <label>Message (Optional)</label>
                       <textarea name="special_requests" className="form-input" placeholder="Any specific requirements..." rows={2} />
@@ -383,6 +414,13 @@ const EventsPage: React.FC = () => {
                   </div>
                 </div>
                 <div className="form-group"><label>Address</label><input name="address" className="form-input" placeholder="Event location address" required /></div>
+                <div style={{ marginBottom: 14, display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
+                  <button type="button" className="btn btn-outline-accent btn-sm" onClick={captureVenueLocation}>
+                    {locationLoading ? 'Locating...' : 'Use Current Location'}
+                  </button>
+                  {venueCoords && <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{venueCoords.lat.toFixed(5)}, {venueCoords.lng.toFixed(5)}</span>}
+                </div>
+                {!venueCoords && <p style={{ marginBottom: 12, fontSize: 12, color: '#b45309' }}>Location sharing is mandatory for nearest partner assignment.</p>}
                 <div className="form-group"><label>Special Requests (Optional)</label><textarea name="special_requests" className="form-input" placeholder="Any specific requirements..." rows={3} style={{ resize: 'vertical' }} /></div>
                 <button className="btn btn-accent btn-lg" style={{ width: '100%' }} type="submit">Get Quote <ArrowRight size={18} /></button>
               </form>

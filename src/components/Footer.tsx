@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
               GaonRide
             </div>
             <p style={{ fontSize: 14, lineHeight: 1.8, maxWidth: 320 }}>
-              Bridging the gap between villages and cities. Premium ride, delivery, and wedding services 
+              Bridging the gap between villages and cities. Premium ride, delivery, and wedding services
               for every village in India. Your village, our pride.
             </p>
             <div className="footer-social" style={{ marginTop: 20 }}>
@@ -66,7 +66,7 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="footer-bottom">
-          <p>© 2026 GaonRide. All rights reserved. Built with ❤️ for every village.</p>
+          <p>© 2026 GaonRide. All rights reserved. Built for every village.</p>
           <div style={{ display: 'flex', gap: 20 }}>
             <a href="#" style={{ color: 'rgba(255,255,255,0.5)', fontSize: 14 }}>Privacy Policy</a>
             <a href="#" style={{ color: 'rgba(255,255,255,0.5)', fontSize: 14 }}>Terms of Service</a>

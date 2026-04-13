@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { CloudSun, ArrowLeft, Droplets, Wind, Thermometer, Sun, CloudRain, CloudLightning, Info } from 'lucide-react';
+import { CloudSun, Droplets, Wind, Thermometer, Sun, CloudRain, CloudLightning, Info } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { useLanguage } from '../components/LanguageContext';
@@ -167,9 +167,6 @@ const WeatherPage: React.FC = () => {
       {/* HEADER */}
       <div style={{ background: 'linear-gradient(135deg, #1e3a8a, #3b82f6)', color: 'white', padding: '60px 0 100px', textAlign: 'center', position: 'relative' }}>
         <div className="container" style={{ position: 'relative' }}>
-          <Link to="/" style={{ position: 'absolute', top: -50, left: 0, color: 'white', display: 'flex', alignItems: 'center', gap: 8, fontSize: 14, fontWeight: 700, opacity: 0.8 }}>
-            <ArrowLeft size={18} /> Back Home
-          </Link>
           <h1 style={{ fontSize: 'clamp(32px, 5vw, 48px)', fontWeight: 900, marginBottom: 16 }}>Agri-Weather <span style={{ color: '#fbbf24' }}>Forecast</span></h1>
           <p style={{ opacity: 0.9, fontSize: 18, maxWidth: 600, margin: '0 auto', fontWeight: 500 }}>Advanced precision farming alerts and weather insights for <span style={{ color: '#fbbf24' }}>{locationName}</span>.</p>
           <p style={{ fontSize: 12, fontWeight: 700, color: '#fbbf24', marginTop: 8 }}>{lastUpdated}</p>

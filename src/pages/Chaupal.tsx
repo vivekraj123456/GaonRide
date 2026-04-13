@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Share2, Star, MessageSquare, Plus, Filter, ArrowLeft, Send } from 'lucide-react';
+import { Heart, Share2, Star, MessageSquare, Plus, Filter, Send } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { useLanguage } from '../components/LanguageContext';
@@ -104,9 +104,6 @@ const ChaupalPage: React.FC = () => {
       {/* HEADER */}
       <div style={{ background: 'linear-gradient(135deg, var(--primary-dark), var(--primary))', color: 'white', padding: '80px 0 120px', textAlign: 'center', position: 'relative' }}>
         <div className="container" style={{ position: 'relative' }}>
-          <Link to="/" style={{ position: 'absolute', top: -40, left: 0, color: 'white', display: 'flex', alignItems: 'center', gap: 8, fontSize: 14, fontWeight: 700, opacity: 0.8 }}>
-            <ArrowLeft size={18} /> Back Home
-          </Link>
           <h1 style={{ fontSize: 48, fontWeight: 900, marginBottom: 16, letterSpacing: '-1px' }}>Digital <span style={{ color: 'var(--accent)' }}>Chaupal</span></h1>
           <p style={{ opacity: 0.9, fontSize: 19, maxWidth: 700, margin: '0 auto', lineHeight: 1.6, fontWeight: 500 }}>A vibrant space for our community to share success stories, helpful tips, and daily updates from across the villages.</p>
         </div>

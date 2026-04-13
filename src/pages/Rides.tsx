@@ -10,6 +10,7 @@ import { useToast } from '../components/Toast';
 import { useLanguage } from '../components/LanguageContext';
 import { supabase } from '../lib/supabase';
 import { addPendingConfirmation, requestBrowserNotificationPermission, useConfirmationNotifications } from '../hooks/useConfirmationNotifications';
+import { estimateEtaMinutes, googleDirectionsUrl, haversineKm, openStreetMapEmbedUrl, toLatLng } from '../lib/geo';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,6 +31,10 @@ const RidesPage: React.FC = () => {
   const [trackResults, setTrackResults] = useState<any[] | null>(null);
   const [tracking, setTracking] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [pickupCoords, setPickupCoords] = useState<{ lat: number; lng: number } | null>(null);
+  const [locationLoading, setLocationLoading] = useState(false);
+  const [partnerLiveById, setPartnerLiveById] = useState<Record<string, { latitude: number; longitude: number; updated_at: string }>>({});
+  const [updatingUserLocId, setUpdatingUserLocId] = useState<string | null>(null);
 
   useConfirmationNotifications({ table: 'ride_bookings', label: 'Ride', showToast });
 
@@ -47,6 +52,10 @@ const RidesPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!pickupCoords) {
+      showToast('Location sharing is mandatory. Tap "Use Current Location" first.');
+      return;
+    }
     setSubmitting(true);
     try {
       const { data, error } = await supabase.from('ride_bookings').insert({
@@ -55,6 +64,8 @@ const RidesPage: React.FC = () => {
         vehicle: formData.vehicle,
         phone: formData.phone,
         preferred_date: formData.date || null,
+        pickup_lat: pickupCoords?.lat ?? null,
+        pickup_lng: pickupCoords?.lng ?? null,
       }).select().single();
       if (error) throw error;
       if (data?.id) addPendingConfirmation('ride_bookings', String(data.id));
@@ -67,6 +78,22 @@ const RidesPage: React.FC = () => {
     }
     setSubmitting(false);
   };
+
+  const capturePickupLocation = () => {
+    if (!navigator.geolocation) {
+      showToast('Geolocation not supported in this browser.');
+      return;
+    }
+    setLocationLoading(true);
+    navigator.geolocation.getCurrentPosition(({ coords }) => {
+      setPickupCoords({ lat: coords.latitude, lng: coords.longitude });
+      setLocationLoading(false);
+      showToast('Pickup location captured.');
+    }, () => {
+      setLocationLoading(false);
+      showToast('Could not capture location.');
+    }, { enableHighAccuracy: true, timeout: 10000 });
+  };
  
   const handleTrack = async () => {
     if (!trackPhone.trim()) return;
@@ -74,7 +101,7 @@ const RidesPage: React.FC = () => {
     try {
       const { data, error } = await supabase
         .from('ride_bookings')
-        .select('id, pickup, drop_location, status, created_at, vehicle')
+        .select('id, pickup, drop_location, status, created_at, vehicle, pickup_lat, pickup_lng, user_live_lat, user_live_lng, user_live_updated_at, assigned_partner_id, assigned_partner_name, assigned_partner_phone, assigned_distance_km')
         .eq('phone', trackPhone.trim())
         .order('created_at', { ascending: false })
         .limit(5);
@@ -96,6 +123,66 @@ const RidesPage: React.FC = () => {
       .subscribe();
     return () => { supabase.removeChannel(channel); };
   }, [trackResults, trackPhone]);
+
+  useEffect(() => {
+    const assignedIds = (trackResults || [])
+      .map((r: any) => r.assigned_partner_id)
+      .filter((v: string | null) => !!v);
+
+    if (!assignedIds.length) {
+      setPartnerLiveById({});
+      return;
+    }
+
+    const loadLocations = async () => {
+      const { data } = await supabase
+        .from('partner_live_locations')
+        .select('partner_id, latitude, longitude, updated_at')
+        .in('partner_id', assignedIds);
+      const next: Record<string, { latitude: number; longitude: number; updated_at: string }> = {};
+      (data || []).forEach((row: any) => {
+        next[row.partner_id] = {
+          latitude: row.latitude,
+          longitude: row.longitude,
+          updated_at: row.updated_at,
+        };
+      });
+      setPartnerLiveById(next);
+    };
+
+    loadLocations();
+    const pollId = window.setInterval(loadLocations, 8000);
+    return () => window.clearInterval(pollId);
+  }, [trackResults]);
+
+  const updateUserLiveLocation = (bookingId: string) => {
+    if (!navigator.geolocation) {
+      showToast('Geolocation not supported in this browser.');
+      return;
+    }
+    setUpdatingUserLocId(bookingId);
+    navigator.geolocation.getCurrentPosition(async ({ coords }) => {
+      const nowIso = new Date().toISOString();
+      const { error } = await supabase
+        .from('ride_bookings')
+        .update({
+          user_live_lat: coords.latitude,
+          user_live_lng: coords.longitude,
+          user_live_updated_at: nowIso,
+        })
+        .eq('id', bookingId);
+      setUpdatingUserLocId(null);
+      if (error) {
+        showToast(`Could not update your location: ${error.message}`);
+        return;
+      }
+      setTrackResults((prev) => prev?.map((row: any) => row.id === bookingId ? { ...row, user_live_lat: coords.latitude, user_live_lng: coords.longitude, user_live_updated_at: nowIso } : row) || null);
+      showToast('Your live location was updated.');
+    }, () => {
+      setUpdatingUserLocId(null);
+      showToast('Location permission denied.');
+    }, { enableHighAccuracy: true, timeout: 10000 });
+  };
 
   const faqs = [
     { q: 'How do I book a ride?', a: 'Simply fill in the booking form above with your pickup and drop location, select a vehicle type, and submit. Our nearest driver will contact you within 2 minutes.' },
@@ -138,6 +225,21 @@ const RidesPage: React.FC = () => {
                   <label>Pickup Location</label>
                   <input className="form-input" type="text" placeholder="Village name, landmark, or address" 
                     value={formData.pickup} onChange={e => setFormData({...formData, pickup: e.target.value})} required />
+                  <div style={{ marginTop: 8, display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
+                    <button type="button" className="btn btn-outline-accent btn-sm" onClick={capturePickupLocation}>
+                      {locationLoading ? 'Locating...' : 'Use Current Location'}
+                    </button>
+                    {pickupCoords && (
+                      <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>
+                        {pickupCoords.lat.toFixed(5)}, {pickupCoords.lng.toFixed(5)}
+                      </span>
+                    )}
+                  </div>
+                  {!pickupCoords && (
+                    <p style={{ marginTop: 6, fontSize: 12, color: '#b45309' }}>
+                      Location sharing is mandatory for nearest partner assignment.
+                    </p>
+                  )}
                 </div>
                 <div className="form-group">
                   <label>Drop Location</label>
@@ -339,6 +441,50 @@ const RidesPage: React.FC = () => {
                         <span>{new Date(r.created_at).toLocaleString('en-IN', {dateStyle:'medium',timeStyle:'short'})}</span>
                       </div>
                     </div>
+                    {r.assigned_partner_id && (
+                      <div style={{ marginTop: 12, borderTop: '1px dashed #e2e8f0', paddingTop: 12 }}>
+                        <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 8 }}>
+                          Assigned Partner: {r.assigned_partner_name || 'Partner'} ({r.assigned_partner_phone || 'phone unavailable'})
+                        </div>
+                        {typeof r.assigned_distance_km === 'number' && (
+                          <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 8 }}>
+                            Estimated distance at assignment: {r.assigned_distance_km.toFixed(2)} km
+                          </div>
+                        )}
+                        {(() => {
+                          const userCoords = toLatLng(r.user_live_lat, r.user_live_lng) || toLatLng(r.pickup_lat, r.pickup_lng);
+                          const live = partnerLiveById[r.assigned_partner_id];
+                          const partnerCoords = live ? toLatLng(live.latitude, live.longitude) : null;
+                          if (!userCoords || !partnerCoords) return null;
+                          const liveDistance = haversineKm(partnerCoords, userCoords);
+                          const etaMins = estimateEtaMinutes(liveDistance, 28);
+                          return (
+                            <div>
+                              <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 8 }}>
+                                Live distance now: {liveDistance.toFixed(2)} km | ETA: ~{etaMins} min | Updated: {new Date(live.updated_at).toLocaleTimeString('en-IN')}
+                              </div>
+                              <iframe
+                                title={`ride-map-${r.id}`}
+                                src={openStreetMapEmbedUrl(partnerCoords)}
+                                style={{ width: '100%', height: 220, border: '1px solid #e2e8f0', borderRadius: 12 }}
+                                loading="lazy"
+                              />
+                              <div style={{ display: 'flex', gap: 8, marginTop: 10, flexWrap: 'wrap' }}>
+                                <a className="btn btn-outline-accent btn-sm" href={googleDirectionsUrl(partnerCoords, userCoords)} target="_blank" rel="noreferrer">
+                                  Partner to User Route
+                                </a>
+                                <a className="btn btn-outline-accent btn-sm" href={googleDirectionsUrl(userCoords, partnerCoords)} target="_blank" rel="noreferrer">
+                                  User to Partner Route
+                                </a>
+                                <button className="btn btn-outline-accent btn-sm" onClick={() => updateUserLiveLocation(r.id)} disabled={updatingUserLocId === r.id}>
+                                  {updatingUserLocId === r.id ? 'Updating...' : 'Update My Live Location'}
+                                </button>
+                              </div>
+                            </div>
+                          );
+                        })()}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
