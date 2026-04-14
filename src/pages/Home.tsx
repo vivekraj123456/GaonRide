@@ -84,75 +84,178 @@ const HomePage: React.FC = () => {
 
   return (
     <>
-      {/* HERO */}
-      <section className="hero" style={{ position: 'relative' }}>
+      {/* HERO — Warm village scene with overlay */}
+      <section className="hero apna-hero" style={{ position: 'relative' }}>
         <div className="hero-bg">
           <img 
-            src="/village1.jpg" 
-            alt="GaonRide Village Transport" 
+            src="/hero_village.png" 
+            alt="GaonRide — Apna Gaon ki Apni Ride Service" 
             style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
           />
         </div>
-        <div className="hero-overlay" />
+        <div className="apna-hero-overlay" />
         <ParticlesBg />
         <div className="container">
-          <div className="hero-content">
+          <div className="hero-content apna-hero-content">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <p style={{ color: 'var(--accent)', fontWeight: 600, fontSize: 16, marginBottom: 12, letterSpacing: 2, textTransform: 'uppercase' }}>
-                Empowering Rural India
+              <p className="apna-subtitle">
+                🏠 Apne Gaon ki
               </p>
-              <h1>
-                Your Village, <br />
-                <span className="highlight">Connected</span> to the World
+              <h1 className="apna-title">
+                Apni Ride <br />
+                <span className="highlight">Service</span>
               </h1>
-              <p>
-                From reliable daily rides and quick parcel deliveries to complete wedding planning — GaonRide brings top-tier services directly to your doorstep.
+              <p className="apna-tagline">
+                Ride • Parcel • Event Booking
               </p>
-              <div className="hero-cta">
-                <Link to="/rides" className="btn btn-accent btn-lg">
-                  Book a Ride <ArrowRight size={18} />
+              <div className="hero-cta apna-cta">
+                <Link to="/rides" className="apna-btn apna-btn-green">
+                  <Car size={18} /> Book Ride
                 </Link>
-                <Link to="/events" className="btn btn-outline btn-lg">
-                  Plan an Event
+                <Link to="/deliveries" className="apna-btn apna-btn-orange">
+                  <Package size={18} /> Send Parcel
+                </Link>
+                <Link to="/events" className="apna-btn apna-btn-red">
+                  <CalendarHeart size={18} /> Book Event
                 </Link>
               </div>
             </motion.div>
-
-            <motion.div
-              className="quick-actions"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-            >
-              <Link to="/rides" className="quick-action">
-                <Car size={28} />
-                <span>Book a Ride</span>
-              </Link>
-              <Link to="/rides" className="quick-action">
-                <Truck size={28} />
-                <span>Tractor Hire</span>
-              </Link>
-              <Link to="/deliveries" className="quick-action">
-                <Package size={28} />
-                <span>Parcel Delivery</span>
-              </Link>
-              <Link to="/events" className="quick-action">
-                <CalendarHeart size={28} />
-                <span>Wedding Services</span>
-              </Link>
-            </motion.div>
           </div>
         </div>
-        <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', overflow: 'hidden', lineHeight: 0, zIndex: 1, pointerEvents: 'none' }}>
-          <svg viewBox="0 0 1440 320" style={{ display: 'block', width: '100%', height: '120px' }} preserveAspectRatio="none">
-            <path fill="rgba(255,255,255,0.02)" d="M0,160L48,170.7C96,181,192,203,288,197.3C384,192,480,160,576,149.3C672,139,768,149,864,170.7C960,192,1056,224,1152,229.3C1248,235,1344,213,1392,202.7L1440,192L1440,320L0,320Z"></path>
-            <path fill="rgba(255,255,255,0.04)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,165.3C960,192,1056,224,1152,213.3C1248,203,1344,149,1392,122.7L1440,96L1440,320L0,320Z"></path>
-            <path fill="rgba(255,255,255,0.08)" d="M0,224L48,213.3C96,203,192,181,288,186.7C384,192,480,224,576,218.7C672,213,768,171,864,160C960,149,1056,171,1152,186.7C1248,203,1344,213,1392,218.7L1440,224L1440,320L0,320Z"></path>
+        {/* Decorative wave */}
+        <div className="apna-wave-bottom">
+          <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path d="M0,40 C320,100 520,0 720,50 C920,100 1140,20 1440,60 L1440,120 L0,120 Z" fill="#fdf6e3" />
           </svg>
+        </div>
+      </section>
+
+      {/* QUICK BOOKING STRIP */}
+      <section className="apna-quick-booking">
+        <div className="container">
+          <div className="apna-booking-card">
+            <h3 className="apna-section-badge">🚗 Quick Booking</h3>
+            <div className="apna-booking-row">
+              <div className="apna-booking-input">
+                <MapPin size={18} className="apna-input-icon" />
+                <input type="text" placeholder="Pickup Location" readOnly />
+              </div>
+              <div className="apna-booking-arrow">▶▶</div>
+              <div className="apna-booking-input">
+                <MapPin size={18} className="apna-input-icon" />
+                <input type="text" placeholder="Drop Location" readOnly />
+              </div>
+              <Link to="/rides" className="apna-btn apna-btn-green apna-btn-sm">
+                Find Ride <ChevronRight size={16} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* OUR SERVICES — Ornamental cards with rounded images */}
+      <section className="apna-section apna-cream-bg">
+        <div className="container">
+          <div className="apna-ornament-header">
+            <div className="apna-ornament-line" />
+            <h2>Our Services</h2>
+            <div className="apna-ornament-line" />
+          </div>
+
+          <div className="apna-services-grid">
+            {[
+              { img: '/service_rides_new.png', title: 'Ride Service', desc: 'Gaon se City ki Yatra Aasaan', link: '/rides', emoji: '🛺' },
+              { img: '/service_delivery_new.png', title: 'Parcel Delivery', desc: 'Same Day Parcel Service', link: '/deliveries', emoji: '📦' },
+              { img: '/service_events_new.png', title: 'Event Booking', desc: 'Shadi, Birthday, Anniversary', link: '/events', emoji: '🎉' },
+            ].map((s, i) => (
+              <Link to={s.link} key={i} style={{ textDecoration: 'none' }}>
+                <motion.div 
+                  className="apna-service-card"
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
+                >
+                  <div className="apna-service-img-wrap">
+                    <img src={s.img} alt={s.title} />
+                    <div className="apna-service-emoji">{s.emoji}</div>
+                  </div>
+                  <h3>{s.title}</h3>
+                  <p>{s.desc}</p>
+                </motion.div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WHY CHOOSE US — Icon cards inspired by reference */}
+      <section className="apna-section apna-white-bg">
+        <div className="container">
+          <div className="apna-ornament-header">
+            <div className="apna-ornament-line" />
+            <h2>Why Choose Us?</h2>
+            <div className="apna-ornament-line" />
+          </div>
+
+          <div className="apna-why-grid">
+            {[
+              { icon: <Shield size={36} />, title: 'Local Drivers', desc: 'All drivers are verified with Aadhaar and background checks. Your safety is our top priority.', emoji: '🏠' },
+              { icon: <Clock size={36} />, title: 'Affordable Price', desc: 'Transparent pricing with no hidden charges. Quality transport accessible to every villager.', emoji: '💰' },
+              { icon: <Truck size={36} />, title: 'Fast Delivery', desc: 'GPS tracking ensures real-time visibility and on-time arrivals, rain or shine.', emoji: '🚚' },
+              { icon: <Phone size={36} />, title: '24x7 Support', desc: 'Round the clock support for all your ride, delivery and event needs.', emoji: '📞' },
+            ].map((f, i) => (
+              <motion.div 
+                className="apna-why-card" 
+                key={i}
+                whileHover={{ y: -6, boxShadow: '0 20px 40px rgba(0,77,0,0.15)' }}
+              >
+                <div className="apna-why-icon">{f.emoji}</div>
+                <h4>{f.title}</h4>
+                <p>{f.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SPECIAL EVENTS BOOKING — Inspired by reference image */}
+      <section className="apna-section apna-cream-bg apna-events-section">
+        <div className="container">
+          <div className="apna-ornament-header apna-ornament-italic">
+            <div className="apna-ornament-line apna-ornament-line-green" />
+            <h2><em>Special Events Booking</em></h2>
+            <div className="apna-ornament-line apna-ornament-line-green" />
+          </div>
+
+          <div className="apna-events-grid">
+            {[
+              { img: '/event_wedding.png', title: 'Wedding Car', link: '/events' },
+              { img: '/event_birthday.png', title: 'Birthday Party', link: '/events' },
+              { img: '/event_anniversary.png', title: 'Anniversary Ride', link: '/events' },
+            ].map((e, i) => (
+              <Link to={e.link} key={i} style={{ textDecoration: 'none' }}>
+                <motion.div 
+                  className="apna-event-card"
+                  whileHover={{ y: -10, scale: 1.03 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
+                >
+                  <div className="apna-event-img">
+                    <img src={e.img} alt={e.title} />
+                  </div>
+                  <div className="apna-event-label">{e.title}</div>
+                </motion.div>
+              </Link>
+            ))}
+          </div>
+
+          <div style={{ textAlign: 'center', marginTop: 36 }}>
+            <Link to="/events" className="apna-btn apna-btn-orange apna-btn-glow">
+              Book Your Event <ChevronRight size={16} />
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -227,11 +330,12 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* HOW IT WORKS */}
-      <section className="section">
+      <section className="apna-section apna-cream-bg">
         <div className="container">
-          <div className="section-header">
-            <h2>How <span>GaonRide</span> Works</h2>
-            <p>Getting a ride or planning an event in your village has never been easier.</p>
+          <div className="apna-ornament-header">
+            <div className="apna-ornament-line" />
+            <h2>How <span style={{ color: 'var(--primary)' }}>GaonRide</span> Works</h2>
+            <div className="apna-ornament-line" />
           </div>
           <div className="steps-grid">
             {[
@@ -250,7 +354,7 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* SERVICES PREVIEW */}
+      {/* SERVICES PREVIEW — Original card grid with new images */}
       <section className="section section-alt">
         <div className="container">
           <div className="section-header">
@@ -259,10 +363,10 @@ const HomePage: React.FC = () => {
           </div>
           <div className="grid-4">
             {[
-              { img: '/service_rides.png', title: 'Village Rides', desc: 'Auto, Bolero, SUV — comfortable rides connecting villages to towns and cities.', link: '/rides', tag: 'Most Popular' },
-              { img: '/service_delivery.png', title: 'Parcel & Grocery', desc: 'Send parcels or get fresh groceries delivered right to your village doorstep.', link: '/deliveries', tag: 'Fast Delivery' },
-              { img: '/service_events.png', title: 'Event Planning', desc: 'Tent, decor, DJ, catering — complete wedding and event solutions in one place.', link: '/events', tag: 'Full Service' },
-              { img: '/service_partner.png', title: 'Earn with Us', desc: 'Own a vehicle? Join GaonRide as a partner driver and earn daily income.', link: '/partner', tag: 'Join Now' },
+              { img: '/service_rides_new.png', title: 'Village Rides', desc: 'Auto, Bolero, SUV — comfortable rides connecting villages to towns and cities.', link: '/rides', tag: 'Most Popular' },
+              { img: '/service_delivery_new.png', title: 'Parcel & Grocery', desc: 'Send parcels or get fresh groceries delivered right to your village doorstep.', link: '/deliveries', tag: 'Fast Delivery' },
+              { img: '/service_events_new.png', title: 'Event Planning', desc: 'Tent, decor, DJ, catering — complete wedding and event solutions in one place.', link: '/events', tag: 'Full Service' },
+              { img: '/service_partner_new.png', title: 'Earn with Us', desc: 'Own a vehicle? Join GaonRide as a partner driver and earn daily income.', link: '/partner', tag: 'Join Now' },
             ].map((s, i) => (
               <Link to={s.link} key={i} style={{ textDecoration: 'none' }}>
                 <div className="card-3d">
@@ -287,7 +391,7 @@ const HomePage: React.FC = () => {
       {/* VILLAGE HUB */}
       <VillageHub />
 
-      {/* WHY CHOOSE US */}
+      {/* WHY CHOOSE US — Detailed version */}
       <section className="section" style={{ position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', bottom: -100, left: -100, opacity: 0.03, zIndex: 0, pointerEvents: 'none', transform: 'scale(1.5)' }}>
           <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="400" height="400">
@@ -314,6 +418,24 @@ const HomePage: React.FC = () => {
                 <p style={{ color: 'var(--text-muted)', fontSize: 15 }}>{f.desc}</p>
               </Tilt3D>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* BECOME A DRIVER PARTNER — Warm earthy CTA */}
+      <section className="apna-partner-cta">
+        <div className="container">
+          <div className="apna-partner-inner">
+            <div className="apna-partner-image">
+              <img src="/service_partner_new.png" alt="Become a Driver Partner" />
+            </div>
+            <div className="apna-partner-text">
+              <h2>Become a Driver Partner!</h2>
+              <p className="apna-partner-subtitle">Gaon ke Drivers Hamare Saathi Bane</p>
+              <Link to="/partner" className="apna-btn apna-btn-white">
+                Register as Driver <ChevronRight size={16} />
+              </Link>
+            </div>
           </div>
         </div>
       </section>
