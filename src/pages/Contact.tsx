@@ -64,7 +64,7 @@ const ContactPage: React.FC = () => {
         <div className="hero-overlay" />
         <div className="container">
           <div className="contact-hero hero-content" style={{ paddingTop: 140 }}>
-            <p style={{ color: 'var(--accent)', fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>🤝 We're Here For You</p>
+            <p style={{ color: 'var(--accent)', fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>We're Here For You</p>
             <h1>Always <span className="highlight">Connected</span></h1>
             <p>Whether you need help booking a ride or want to bring GaonRide to your village, our community support team is just a call away.</p>
           </div>
@@ -99,7 +99,7 @@ const ContactPage: React.FC = () => {
         </div>
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <div className="grid-2">
-            <div className="form-card" style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.12)' }}>
+            <div className="form-card">
               <h3>Send us a Message</h3>
               <form onSubmit={handleSubmit} style={{ marginTop: 20 }}>
                 <div className="form-row">
@@ -139,7 +139,7 @@ const ContactPage: React.FC = () => {
 
             <div>
               <h2 style={{ fontSize: 28, fontWeight: 800, marginBottom: 24 }}>Office <span style={{ color: 'var(--primary)' }}>Hours</span></h2>
-              <div style={{ background: 'white', borderRadius: 'var(--radius-lg)', overflow: 'hidden', boxShadow: 'var(--shadow)', marginBottom: 32 }}>
+              <div style={{ background: 'white', borderRadius: 'var(--radius-lg)', overflow: 'hidden', marginBottom: 32 }}>
                 {officeHours.map((o, i) => (
                   <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '14px 24px', borderBottom: i < officeHours.length - 1 ? '1px solid #f3f4f6' : 'none' }}>
                     <span style={{ fontWeight: 600 }}>{o.day}</span>

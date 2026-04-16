@@ -134,28 +134,7 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* QUICK BOOKING STRIP */}
-      <section className="apna-quick-booking">
-        <div className="container">
-          <div className="apna-booking-card">
-            <h3 className="apna-section-badge">Quick Booking</h3>
-            <div className="apna-booking-row">
-              <div className="apna-booking-input">
-                <MapPin size={18} className="apna-input-icon" />
-                <input type="text" placeholder="Pickup Location" readOnly />
-              </div>
-              <div className="apna-booking-arrow">▶▶</div>
-              <div className="apna-booking-input">
-                <MapPin size={18} className="apna-input-icon" />
-                <input type="text" placeholder="Drop Location" readOnly />
-              </div>
-              <Link to="/rides" className="apna-btn apna-btn-green apna-btn-sm">
-                Find Ride <ChevronRight size={16} />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* OUR SERVICES — Ornamental cards with rounded images */}
       <section className="apna-section apna-cream-bg">
@@ -200,21 +179,20 @@ const HomePage: React.FC = () => {
           </div>
 
           <div className="apna-why-grid">
+            {/* WHY CHOOSE US — Linked to card-3d system */}
             {[
               { icon: <Shield size={36} />, title: 'Local Drivers', desc: 'All drivers are verified with Aadhaar and background checks. Your safety is our top priority.' },
               { icon: <Clock size={36} />, title: 'Affordable Price', desc: 'Transparent pricing with no hidden charges. Quality transport accessible to every villager.' },
               { icon: <Truck size={36} />, title: 'Fast Delivery', desc: 'GPS tracking ensures real-time visibility and on-time arrivals, rain or shine.' },
               { icon: <Phone size={36} />, title: '24x7 Support', desc: 'Round the clock support for all your ride, delivery and event needs.' },
             ].map((f, i) => (
-              <motion.div 
-                className="apna-why-card" 
-                key={i}
-                whileHover={{ y: -6, boxShadow: '0 20px 40px rgba(0,77,0,0.15)' }}
-              >
-                <div className="apna-why-icon">{f.icon}</div>
-                <h4>{f.title}</h4>
-                <p>{f.desc}</p>
-              </motion.div>
+              <Tilt3D className="card-3d" key={i}>
+                <div style={{ padding: 32 }}>
+                  <div className="apna-why-icon">{f.icon}</div>
+                  <h4>{f.title}</h4>
+                  <p>{f.desc}</p>
+                </div>
+              </Tilt3D>
             ))}
           </div>
         </div>
@@ -236,16 +214,14 @@ const HomePage: React.FC = () => {
               { img: '/event_anniversary.png', title: 'Anniversary Ride', link: '/events' },
             ].map((e, i) => (
               <Link to={e.link} key={i} style={{ textDecoration: 'none' }}>
-                <motion.div 
-                  className="apna-event-card"
-                  whileHover={{ y: -10, scale: 1.03 }}
-                  transition={{ type: 'spring', stiffness: 300 }}
-                >
-                  <div className="apna-event-img">
-                    <img src={e.img} alt={e.title} />
+                <Tilt3D className="card-3d">
+                  <div className="apna-event-card" style={{ background: 'transparent', border: 'none', boxShadow: 'none' }}>
+                    <div className="apna-event-img">
+                      <img src={e.img} alt={e.title} />
+                    </div>
+                    <div className="apna-event-label">{e.title}</div>
                   </div>
-                  <div className="apna-event-label">{e.title}</div>
-                </motion.div>
+                </Tilt3D>
               </Link>
             ))}
           </div>
@@ -266,22 +242,30 @@ const HomePage: React.FC = () => {
             <p>We are committed to making transportation and services accessible in every corner of India.</p>
           </div>
           <div className="stats-row">
-            <div className="stat-card">
-              <div className="stat-number">{counters.rides.toLocaleString()}+</div>
-              <div className="stat-label">Rides Completed</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-number">{counters.villages}+</div>
-              <div className="stat-label">Villages Served</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-number">{counters.drivers.toLocaleString()}+</div>
-              <div className="stat-label">Active Drivers</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-number">{counters.events.toLocaleString()}+</div>
-              <div className="stat-label">Events Managed</div>
-            </div>
+            <Tilt3D className="card-3d">
+              <div className="stat-card">
+                <div className="stat-number">{counters.rides.toLocaleString()}+</div>
+                <div className="stat-label">Rides Completed</div>
+              </div>
+            </Tilt3D>
+            <Tilt3D className="card-3d">
+              <div className="stat-card">
+                <div className="stat-number">{counters.villages}+</div>
+                <div className="stat-label">Villages Served</div>
+              </div>
+            </Tilt3D>
+            <Tilt3D className="card-3d">
+              <div className="stat-card">
+                <div className="stat-number">{counters.drivers.toLocaleString()}+</div>
+                <div className="stat-label">Active Drivers</div>
+              </div>
+            </Tilt3D>
+            <Tilt3D className="card-3d">
+              <div className="stat-card">
+                <div className="stat-number">{counters.events.toLocaleString()}+</div>
+                <div className="stat-label">Events Managed</div>
+              </div>
+            </Tilt3D>
           </div>
         </div>
       </section>
