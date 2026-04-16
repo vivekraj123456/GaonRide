@@ -103,7 +103,7 @@ const HomePage: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <p className="apna-subtitle">
-                🏠 Apne Gaon ki
+                Apne Gaon ki
               </p>
               <h1 className="apna-title">
                 Apni Ride <br />
@@ -138,7 +138,7 @@ const HomePage: React.FC = () => {
       <section className="apna-quick-booking">
         <div className="container">
           <div className="apna-booking-card">
-            <h3 className="apna-section-badge">🚗 Quick Booking</h3>
+            <h3 className="apna-section-badge">Quick Booking</h3>
             <div className="apna-booking-row">
               <div className="apna-booking-input">
                 <MapPin size={18} className="apna-input-icon" />
@@ -168,9 +168,9 @@ const HomePage: React.FC = () => {
 
           <div className="apna-services-grid">
             {[
-              { img: '/service_rides_new.png', title: 'Ride Service', desc: 'Gaon se City ki Yatra Aasaan', link: '/rides', emoji: '🛺' },
-              { img: '/service_delivery_new.png', title: 'Parcel Delivery', desc: 'Same Day Parcel Service', link: '/deliveries', emoji: '📦' },
-              { img: '/service_events_new.png', title: 'Event Booking', desc: 'Shadi, Birthday, Anniversary', link: '/events', emoji: '🎉' },
+              { img: '/service_rides_new.png', title: 'Ride Service', desc: 'Gaon se City ki Yatra Aasaan', link: '/rides' },
+              { img: '/service_delivery_new.png', title: 'Parcel Delivery', desc: 'Same Day Parcel Service', link: '/deliveries' },
+              { img: '/service_events_new.png', title: 'Event Booking', desc: 'Shadi, Birthday, Anniversary', link: '/events' },
             ].map((s, i) => (
               <Link to={s.link} key={i} style={{ textDecoration: 'none' }}>
                 <motion.div 
@@ -180,7 +180,6 @@ const HomePage: React.FC = () => {
                 >
                   <div className="apna-service-img-wrap">
                     <img src={s.img} alt={s.title} />
-                    <div className="apna-service-emoji">{s.emoji}</div>
                   </div>
                   <h3>{s.title}</h3>
                   <p>{s.desc}</p>
@@ -202,17 +201,17 @@ const HomePage: React.FC = () => {
 
           <div className="apna-why-grid">
             {[
-              { icon: <Shield size={36} />, title: 'Local Drivers', desc: 'All drivers are verified with Aadhaar and background checks. Your safety is our top priority.', emoji: '🏠' },
-              { icon: <Clock size={36} />, title: 'Affordable Price', desc: 'Transparent pricing with no hidden charges. Quality transport accessible to every villager.', emoji: '💰' },
-              { icon: <Truck size={36} />, title: 'Fast Delivery', desc: 'GPS tracking ensures real-time visibility and on-time arrivals, rain or shine.', emoji: '🚚' },
-              { icon: <Phone size={36} />, title: '24x7 Support', desc: 'Round the clock support for all your ride, delivery and event needs.', emoji: '📞' },
+              { icon: <Shield size={36} />, title: 'Local Drivers', desc: 'All drivers are verified with Aadhaar and background checks. Your safety is our top priority.' },
+              { icon: <Clock size={36} />, title: 'Affordable Price', desc: 'Transparent pricing with no hidden charges. Quality transport accessible to every villager.' },
+              { icon: <Truck size={36} />, title: 'Fast Delivery', desc: 'GPS tracking ensures real-time visibility and on-time arrivals, rain or shine.' },
+              { icon: <Phone size={36} />, title: '24x7 Support', desc: 'Round the clock support for all your ride, delivery and event needs.' },
             ].map((f, i) => (
               <motion.div 
                 className="apna-why-card" 
                 key={i}
                 whileHover={{ y: -6, boxShadow: '0 20px 40px rgba(0,77,0,0.15)' }}
               >
-                <div className="apna-why-icon">{f.emoji}</div>
+                <div className="apna-why-icon">{f.icon}</div>
                 <h4>{f.title}</h4>
                 <p>{f.desc}</p>
               </motion.div>
