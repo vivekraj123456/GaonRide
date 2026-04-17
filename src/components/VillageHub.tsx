@@ -3,7 +3,7 @@ import { TrendingUp, CloudSun, Users, ArrowUpRight, MessageSquare, Heart, Star, 
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { useLanguage } from './LanguageContext';
-import { Tilt3D } from './Effects3D';
+
 
 const VillageHub: React.FC = () => {
   const { t } = useLanguage();
@@ -80,16 +80,25 @@ const VillageHub: React.FC = () => {
       });
     }
 
-    // Removed initial opacity animation to ensure visibility is never blocked
-    gsap.from('.hub-card', {
-      duration: 1,
-      y: 30,
-      stagger: 0.2,
-      scrollTrigger: {
-        trigger: '.village-hub',
-        start: 'top 85%',
+    // Use fromTo for better reliability and to ensure opacity 1 is always reached
+    gsap.fromTo('.hub-card', 
+      { 
+        opacity: 0, 
+        y: 40 
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: 'power3.out',
+        clearProps: 'opacity,transform',
+        scrollTrigger: {
+          trigger: '.village-hub',
+          start: 'top 85%',
+        }
       }
-    });
+    );
   }, []);
 
   return (
@@ -180,9 +189,18 @@ const VillageHub: React.FC = () => {
           )}
         </div>
 
-        <div className="grid-2">
+        <div className="grid-2" style={{ alignItems: 'stretch' }}>
           {/* WEATHER ADVICE */}
-          <div className="hub-card" style={{ background: 'white', padding: 32, borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-lg)', border: '1px solid rgba(0,77,0,0.1)' }}>
+          <div className="hub-card" style={{ 
+            background: 'white', 
+            padding: 32, 
+            borderRadius: 'var(--radius-lg)', 
+            boxShadow: 'var(--shadow-lg)', 
+            border: '1px solid rgba(0,77,0,0.1)',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column'
+          }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                 <div style={{ width: 44, height: 44, borderRadius: 10, background: '#fff7ed', color: '#f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><CloudSun size={24} /></div>
@@ -201,13 +219,22 @@ const VillageHub: React.FC = () => {
               <p style={{ fontSize: 16, lineHeight: 1.6, fontWeight: 600, color: 'var(--text)' }}>{t('hub.advice.irrigation')}</p>
             </div>
             
-            <Link to="/weather" className="btn btn-outline-accent btn-sm" style={{ marginTop: 24, padding: '10px 16px' }}>
-              Full Forecast <ArrowUpRight size={14} />
+            <Link to="/weather" className="btn btn-primary" style={{ marginTop: 'auto', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, padding: '14px' }}>
+              View Detailed Forecast <ArrowUpRight size={18} />
             </Link>
           </div>
 
           {/* CHAUPAL */}
-          <div className="hub-card" style={{ background: 'white', padding: 32, borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-lg)', border: '1px solid rgba(0,77,0,0.1)' }}>
+          <div className="hub-card" style={{ 
+            background: 'white', 
+            padding: 32, 
+            borderRadius: 'var(--radius-lg)', 
+            boxShadow: 'var(--shadow-lg)', 
+            border: '1px solid rgba(0,77,0,0.1)',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column'
+          }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
               <div style={{ width: 44, height: 44, borderRadius: 10, background: '#ecfdf5', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Users size={24} /></div>
               <h3 style={{ fontSize: 20, fontWeight: 800 }}>{t('hub.chaupalTitle')}</h3>
@@ -235,8 +262,8 @@ const VillageHub: React.FC = () => {
               ))}
             </div>
 
-            <Link to="/chaupal" className="btn btn-primary btn-sm" style={{ marginTop: 24, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
-              Visit Digital Chaupal <MessageSquare size={14} />
+            <Link to="/chaupal" className="btn btn-primary" style={{ marginTop: 'auto', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, padding: '14px' }}>
+              Visit Community Chaupal <MessageSquare size={18} />
             </Link>
           </div>
         </div>

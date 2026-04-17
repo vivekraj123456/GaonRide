@@ -176,10 +176,10 @@ const EventsPage: React.FC = () => {
         <div className="hero-bg"><img src="/event.png" alt="Events" /></div>
         <div className="hero-overlay" />
         <div className="container">
-          <div className="ev-hero hero-content" style={{ paddingTop: 140 }}>
+          <div className="ev-hero hero-content" style={{ paddingTop: 140, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <p style={{ color: 'var(--accent)', fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>🎉 Celebrate in Style</p>
             <h1>Event & <span className="highlight">Wedding</span> Services</h1>
-            <p>From intimate village gatherings to grand weddings — tent, DJ, catering, and decorated cars, all in one place.</p>
+            <p style={{ maxWidth: 600, margin: '0 auto' }}>From intimate village gatherings to grand weddings — tent, DJ, catering, and decorated cars, all in one place.</p>
           </div>
         </div>
         <div style={{ position: 'absolute', bottom: -1, left: 0, width: '100%', overflow: 'hidden', lineHeight: 0, zIndex: 5, pointerEvents: 'none' }}>
@@ -359,71 +359,113 @@ const EventsPage: React.FC = () => {
         )}
       </section>
 
-      <section className="section section-alt" style={{ position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', left: '-10%', bottom: '-10%', opacity: 0.04, zIndex: 0, pointerEvents: 'none' }}>
-          <svg width="500" height="500" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <path fill="var(--primary)" d="M47.7,-75.6C62,-67.2,73.9,-53.6,80.4,-37.6C86.9,-21.6,88, -3.2,83.7,13.6C79.4,30.4,69.7,45.6,56.5,56.9C43.3,68.2,26.6,75.6,8.5,78.5C-9.6,81.4,-28.1,79.8,-43.3,70.9C-58.5,62,-70.4,45.8,-76.5,27.5C-82.6,9.2,-82.9,-11.5,-75.6,-28.5C-68.3,-45.5,-53.4,-58.8,-37.9,-66.8C-22.4,-74.8,-6.3,-77.5,9.4,-79.8C25.1,-82.1,43.4,-84,47.7,-75.6Z" transform="translate(100 100)" />
-          </svg>
-        </div>
-        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-          <div className="grid-2">
-            <div>
-              <h2 style={{ fontSize: 32, fontWeight: 800, marginBottom: 16 }}>Get a <span style={{ color: 'var(--primary)' }}>Quote</span> for Your Event!</h2>
-              <p style={{ color: 'var(--text-muted)', marginBottom: 32 }}>Tell us about your event and we'll prepare a detailed quote within 24 hours. No commitment required.</p>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-                {[
-                  { n: '500+', l: 'Events Completed' },
-                  { n: '4.9★', l: 'Average Rating' },
-                  { n: '100+', l: 'Village Partners' },
-                  { n: '₹0', l: 'Quote Fee' },
-                ].map((s, i) => (
-                  <div key={i} style={{ padding: 20, background: 'white', borderRadius: 'var(--radius)', textAlign: 'center', boxShadow: 'var(--shadow)' }}>
-                    <div style={{ fontSize: 28, fontWeight: 900, color: 'var(--primary)' }}>{s.n}</div>
-                    <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>{s.l}</div>
+      <section id="quote-form" className="split-form-section">
+        <div className="container">
+          <div className="split-form-grid">
+            <div className="split-form-content" style={{ order: 1 }}>
+              <p style={{ color: 'var(--accent)', fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>📋 Hassle-Free Planning</p>
+              <h2>Get a <span className="highlight">Quote</span> for Your Event</h2>
+              <p style={{ color: 'var(--text-muted)', marginBottom: 32, fontSize: 16 }}>Tell us about your event and we'll prepare a detailed quote within 24 hours. No commitment required.</p>
+              
+              <form onSubmit={handleSubmit}>
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Full Name</label>
+                    <input name="full_name" className="form-input" placeholder="Your name" required />
                   </div>
-                ))}
-              </div>
-            </div>
+                  <div className="form-group">
+                    <label>Phone Number</label>
+                    <input name="phone" className="form-input" type="tel" placeholder="+91 XXXXX XXXXX" required />
+                  </div>
+                </div>
 
-            <div id="quote-form" className="form-card" style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.12)' }}>
-              <h3>📋 Request a Quote</h3>
-              <form onSubmit={handleSubmit} style={{ marginTop: 20 }}>
                 <div className="form-row">
-                  <div className="form-group"><label>Full Name</label><input name="full_name" className="form-input" placeholder="Your name" required /></div>
-                  <div className="form-group"><label>Phone</label><input name="phone" className="form-input" type="tel" placeholder="+91 XXXXX XXXXX" required /></div>
-                </div>
-                <div className="form-row">
-                  <div className="form-group"><label>Event Type</label>
-                    <select name="event_type" className="form-input"><option>Wedding</option><option>Engagement</option><option>Birthday</option><option>Anniversary</option><option>Festival / Fair</option><option>Religious Ceremony</option><option>Other</option></select>
+                  <div className="form-group">
+                    <label>Event Type</label>
+                    <select name="event_type" className="form-input">
+                      <option>Wedding</option>
+                      <option>Engagement</option>
+                      <option>Birthday</option>
+                      <option>Anniversary</option>
+                      <option>Festival / Fair</option>
+                      <option>Religious Ceremony</option>
+                      <option>Other</option>
+                    </select>
                   </div>
-                  <div className="form-group"><label>Event Date</label><input name="event_date" className="form-input" type="date" required /></div>
+                  <div className="form-group">
+                    <label>Event Date</label>
+                    <input name="event_date" className="form-input" type="date" required />
+                  </div>
                 </div>
+
                 <div className="form-group">
                   <label>Expected Guests</label>
-                  <select name="expected_guests" className="form-input"><option>Up to 50</option><option>50-100</option><option>100-300</option><option>300-500</option><option>500+</option></select>
+                  <select name="expected_guests" className="form-input">
+                    <option>Up to 50</option>
+                    <option>50-100</option>
+                    <option>100-300</option>
+                    <option>300-500</option>
+                    <option>500+</option>
+                  </select>
                 </div>
+
                 <div className="form-group">
                   <label>Services Needed</label>
-                  <div className="checkbox-group">
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 12, marginTop: 8 }}>
                     {Object.entries({ tent: 'Tent & Decoration', dj: 'DJ & Sound', catering: 'Catering', car: 'Wedding Car' }).map(([k, v]) => (
-                      <label className="checkbox-label" key={k}>
-                        <input type="checkbox" checked={services[k as keyof typeof services]} onChange={e => setServices({ ...services, [k]: e.target.checked })} />
-                        {v}
+                      <label key={k} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: services[k as keyof typeof services] ? 'rgba(0,121,107,0.05)' : '#f9fafb', borderRadius: 10, border: services[k as keyof typeof services] ? '1px solid var(--primary)' : '1px solid #eaecf0', cursor: 'pointer', transition: 'all 0.2s' }}>
+                        <input type="checkbox" checked={services[k as keyof typeof services]} onChange={e => setServices({ ...services, [k]: e.target.checked })} style={{ accentColor: 'var(--primary)' }} />
+                        <span style={{ fontSize: 13, fontWeight: 500 }}>{v}</span>
                       </label>
                     ))}
                   </div>
                 </div>
-                <div className="form-group"><label>Address</label><input name="address" className="form-input" placeholder="Event location address" required /></div>
-                <div style={{ marginBottom: 14, display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
-                  <button type="button" className="btn btn-outline-accent btn-sm" onClick={captureVenueLocation}>
-                    {locationLoading ? 'Locating...' : 'Use Current Location'}
-                  </button>
-                  {venueCoords && <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{venueCoords.lat.toFixed(5)}, {venueCoords.lng.toFixed(5)}</span>}
+
+                <div className="form-group">
+                  <label>Event Location Address</label>
+                  <input name="address" className="form-input" placeholder="Village / Landmark / House Name" required />
                 </div>
-                {!venueCoords && <p style={{ marginBottom: 12, fontSize: 12, color: '#b45309' }}>Location sharing is mandatory for nearest partner assignment.</p>}
-                <div className="form-group"><label>Special Requests (Optional)</label><textarea name="special_requests" className="form-input" placeholder="Any specific requirements..." rows={3} style={{ resize: 'vertical' }} /></div>
-                <button className="btn btn-accent btn-lg" style={{ width: '100%' }} type="submit">Get Quote <ArrowRight size={18} /></button>
+
+                <div style={{ marginBottom: 16, display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
+                  <button type="button" className="btn btn-outline-accent btn-sm" onClick={captureVenueLocation}>
+                    {locationLoading ? 'Locating...' : '📍 Use Current Location'}
+                  </button>
+                  {venueCoords && <span style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 600 }}>GPS Position Captured ✓</span>}
+                </div>
+
+                {!venueCoords && <p style={{ marginBottom: 16, fontSize: 12, color: '#b45309', padding: '8px 12px', background: '#fffbeb', borderRadius: 6 }}>⚠️ Location sharing is mandatory for nearest partner assignment.</p>}
+
+                <div className="form-group">
+                  <label>Special Requests (Optional)</label>
+                  <textarea name="special_requests" className="form-input" placeholder="Any specific requirements (e.g. Pure Veg, Specific Themes)..." rows={3} style={{ resize: 'vertical' }} />
+                </div>
+
+                <button className="btn btn-primary btn-lg" style={{ width: '100%', marginTop: 8, background: '#101828' }} type="submit">
+                  Generate Quote Request <ArrowRight size={18} />
+                </button>
               </form>
+            </div>
+
+            <div className="split-form-image-wrap" style={{ order: 2 }}>
+              <img 
+                src="/event_form_desi.png" 
+                alt="Celebrate with GaonRide" 
+              />
+              <div style={{ position: 'absolute', bottom: 40, left: 40, right: 40, background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(15px)', padding: 32, borderRadius: 24, border: '1px solid rgba(255,255,255,0.2)', color: 'white' }}>
+                <h4 style={{ fontSize: 24, fontWeight: 700, marginBottom: 8 }}>Your Dream Event, Our Responsibility.</h4>
+                <p style={{ fontSize: 15, opacity: 0.9 }}>From intimate village gatherings to grand weddings — we handle the essentials so you can focus on the memories.</p>
+                <div style={{ marginTop: 24, display: 'flex', gap: 24 }}>
+                  <div>
+                    <p style={{ fontSize: 20, fontWeight: 800, margin: 0 }}>500+</p>
+                    <p style={{ fontSize: 12, opacity: 0.8 }}>Events Success</p>
+                  </div>
+                  <div style={{ width: 1, backgroundColor: 'rgba(255,255,255,0.2)' }}></div>
+                  <div>
+                    <p style={{ fontSize: 20, fontWeight: 800, margin: 0 }}>4.9★</p>
+                    <p style={{ fontSize: 12, opacity: 0.8 }}>Avg. User Rating</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -5,7 +5,8 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   Car, Package, Music, Tent, Star, Users, MapPin, Clock,
-  Shield, Heart, ChevronRight, ArrowRight, Truck, CalendarHeart, Phone, Flame, Navigation
+  Shield, Heart, ChevronRight, ArrowRight, Truck, CalendarHeart, Phone, Flame, Navigation,
+  Banknote, ShieldCheck
 } from 'lucide-react';
 import { ParticlesBg, Tilt3D } from '../components/Effects3D';
 import VillageHub from '../components/VillageHub';
@@ -406,17 +407,37 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* BECOME A DRIVER PARTNER — Warm earthy CTA */}
+      {/* BECOME A DRIVER PARTNER — Warm earthy CTA */}
       <section className="apna-partner-cta">
+        <ParticlesBg />
         <div className="container">
           <div className="apna-partner-inner">
-            <div className="apna-partner-image">
-              <img src="/service_partner_new.png" alt="Become a Driver Partner" />
+            <div className="apna-partner-image-wrap">
+              <Tilt3D intensity={15} glare={true}>
+                <div className="apna-partner-image">
+                  <img src="/service_partner_new.png" alt="Become a Driver Partner" />
+                </div>
+              </Tilt3D>
+              
+              {/* Floating Benefit Chips */}
+              <div className="partner-chip chip-1">
+                <Banknote size={16} color="#ffcc00" /> Earn ₹15,000+ Monthly
+              </div>
+              <div className="partner-chip chip-2">
+                <ShieldCheck size={16} color="#ffcc00" /> Full Insurance Cover
+              </div>
+              <div className="partner-chip chip-3">
+                <Star size={16} color="#ffcc00" /> 4.8★ Driver Rating
+              </div>
             </div>
+
             <div className="apna-partner-text">
-              <h2>Become a Driver Partner!</h2>
-              <p className="apna-partner-subtitle">Gaon ke Drivers Hamare Saathi Bane</p>
-              <Link to="/partner" className="apna-btn apna-btn-white">
-                Register as Driver <ChevronRight size={16} />
+              <span className="partner-badge">Partner Program 2026</span>
+              <h2>Become a <span style={{ color: 'var(--accent)' }}>Driver Partner</span>!</h2>
+              <p className="apna-partner-subtitle">Join India's fastest growing rural transport network and earn with respect.</p>
+              
+              <Link to="/partner" className="apna-btn apna-btn-white" style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.2)' }}>
+                Register as Driver <ChevronRight size={18} />
               </Link>
             </div>
           </div>

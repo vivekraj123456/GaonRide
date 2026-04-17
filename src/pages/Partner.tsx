@@ -278,10 +278,10 @@ const PartnerPage: React.FC = () => {
         <div className="hero-bg"><img src="/village_partner_hero.png" alt="Partner" /></div>
         <div className="hero-overlay" />
         <div className="container">
-          <div className="partner-hero hero-content" style={{ paddingTop: 140 }}>
+          <div className="partner-hero hero-content" style={{ paddingTop: 140, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <p style={{ color: 'var(--accent)', fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>Drive and Earn</p>
             <h1>Become a <span className="highlight">GaonRide</span> Partner</h1>
-            <p>Register as multi-service partner and receive nearby assignments.</p>
+            <p style={{ maxWidth: 600, margin: '0 auto' }}>Register as multi-service partner and receive nearby assignments.</p>
           </div>
         </div>
       </section>
@@ -311,65 +311,83 @@ const PartnerPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="section">
+      <section className="split-form-section">
         <div className="container">
-          <div className="grid-2">
-            <div className="form-card" style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.12)' }}>
-              <h3>Join as Partner</h3>
-              <form onSubmit={handleSubmit} style={{ marginTop: 20 }}>
+          <div className="split-form-grid">
+            <div className="split-form-content">
+              <p style={{ color: 'var(--primary)', fontWeight: 700, textTransform: 'uppercase', fontSize: 13, letterSpacing: 1.5, marginBottom: 16 }}>Register Now</p>
+              <h2>Join as Partner</h2>
+              <form onSubmit={handleSubmit}>
                 <div className="form-row">
                   <div className="form-group"><label>Full Name</label><input name="full_name" className="form-input" placeholder="Your name" required /></div>
                   <div className="form-group"><label>Phone</label><input name="phone" className="form-input" type="tel" placeholder="+91 XXXXX XXXXX" required /></div>
                 </div>
-                <div className="form-row">
+                <div className="form-row" style={{ marginTop: 12 }}>
                   <div className="form-group"><label>Village / Town</label><input name="village" className="form-input" placeholder="Village" required /></div>
                   <div className="form-group"><label>District</label><input name="district" className="form-input" placeholder="District" required /></div>
                 </div>
-                <div className="form-group">
+                <div className="form-group" style={{ marginTop: 16 }}>
                   <label>Vehicle Type</label>
-                  <div className="checkbox-group">
+                  <div className="checkbox-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
                     {Object.entries({ auto: 'Auto Rickshaw', bolero: 'Bolero / SUV', bike: 'Bike', tractor: 'Tractor / Pickup' }).map(([key, value]) => (
-                      <label className="checkbox-label" key={key}>
+                      <label className="checkbox-label" key={key} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 14 }}>
                         <input type="checkbox" checked={vehicleTypes[key]} onChange={(e) => setVehicleTypes({ ...vehicleTypes, [key]: e.target.checked })} /> {value}
                       </label>
                     ))}
                   </div>
                 </div>
-                <div className="form-group">
+                <div className="form-group" style={{ marginTop: 16 }}>
                   <label>Service Roles (select multiple)</label>
-                  <div className="checkbox-group">
+                  <div className="checkbox-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
                     {Object.entries({ driver: 'Driver', parcel_boy: 'Parcel Delivery', event_support: 'Event Support' }).map(([key, value]) => (
-                      <label className="checkbox-label" key={key}>
+                      <label className="checkbox-label" key={key} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 14 }}>
                         <input type="checkbox" checked={serviceRoles[key]} onChange={(e) => setServiceRoles({ ...serviceRoles, [key]: e.target.checked })} /> {value}
                       </label>
                     ))}
                   </div>
                 </div>
-                <div className="form-group"><label>Aadhaar Number</label><input name="aadhaar" className="form-input" placeholder="XXXX XXXX XXXX" /></div>
-                <button className="btn btn-accent btn-lg" style={{ width: '100%' }} type="submit">Join GaonRide <UserPlus size={18} /></button>
+                <div className="form-group" style={{ marginTop: 16 }}>
+                  <label>Aadhaar Number</label>
+                  <input name="aadhaar" className="form-input" placeholder="XXXX XXXX XXXX" />
+                </div>
+                <button className="btn btn-primary" style={{ width: '100%', marginTop: 24 }} type="submit">
+                  Join GaonRide <UserPlus size={18} />
+                </button>
               </form>
             </div>
 
-            <div className="form-card" style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.12)' }}>
-              <h3>Partner Live Location</h3>
-              <p style={{ color: 'var(--text-muted)', marginBottom: 14 }}>Update this from your phone to receive nearest assignments.</p>
-              <div className="form-group">
-                <label>Registered Phone</label>
-                <input className="form-input" value={locPhone} onChange={(e) => setLocPhone(e.target.value)} placeholder="+91 XXXXX XXXXX" />
+            <div className="split-form-image-wrap">
+              <img src="/partner_form_desi_1776344308735.png" alt="Partner Program" />
+              <div style={{ position: 'absolute', bottom: 40, left: 40, right: 40, background: 'rgba(0,100,0,0.3)', backdropFilter: 'blur(20px)', padding: 30, borderRadius: 24, border: '1px solid rgba(255,255,255,0.1)', color: 'white' }}>
+                <h3 style={{ fontSize: 24, fontWeight: 700, marginBottom: 12 }}>Grow with our community</h3>
+                <p style={{ fontSize: 16, opacity: 0.9 }}>Connect with 1200+ partners who are earning more and and building a better future with GaonRide.</p>
               </div>
-              <label className="checkbox-label" style={{ marginBottom: 16 }}>
-                <input type="checkbox" checked={locAvailability} onChange={(e) => setLocAvailability(e.target.checked)} /> I am available for new jobs
-              </label>
-              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                <button className="btn btn-primary" onClick={updateLiveLocation} disabled={locationBusy}>
-                  <MapPin size={16} /> {locationBusy ? 'Updating...' : 'Share Current Location'}
-                </button>
-                {!autoTracking ? (
-                  <button className="btn btn-outline-accent btn-sm" onClick={startAutoTracking}>Start Real-Time Tracking</button>
-                ) : (
-                  <button className="btn btn-outline btn-sm" style={{ color: '#dc2626', borderColor: '#fecaca' }} onClick={stopAutoTracking}>Stop Tracking</button>
-                )}
-              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-alt">
+        <div className="container">
+          <div style={{ maxWidth: 800, margin: '0 auto', background: 'white', padding: 40, borderRadius: 24, boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
+            <h3 style={{ fontSize: 24, fontWeight: 800, marginBottom: 8 }}>Partner Live Location</h3>
+            <p style={{ color: 'var(--text-muted)', marginBottom: 24 }}>Update this from your phone to receive nearest assignments.</p>
+            <div className="form-group">
+              <label>Registered Phone</label>
+              <input className="form-input" style={{ background: '#fcfcfc', border: '1px solid #eaecf0', borderRadius: 8, padding: '12px 16px', width: '100%' }} value={locPhone} onChange={(e) => setLocPhone(e.target.value)} placeholder="+91 XXXXX XXXXX" />
+            </div>
+            <label className="checkbox-label" style={{ marginBottom: 24, display: 'flex', alignItems: 'center', gap: 10, marginTop: 16 }}>
+              <input type="checkbox" checked={locAvailability} onChange={(e) => setLocAvailability(e.target.checked)} /> I am available for new jobs
+            </label>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+              <button className="btn btn-primary" onClick={updateLiveLocation} disabled={locationBusy} style={{ padding: '12px 24px' }}>
+                <MapPin size={16} /> {locationBusy ? 'Updating...' : 'Share Current Location'}
+              </button>
+              {!autoTracking ? (
+                <button className="btn btn-primary" style={{ background: '#f3f4f6', color: '#101828' }} onClick={startAutoTracking}>Start Real-Time Tracking</button>
+              ) : (
+                <button className="btn btn-outline" style={{ color: '#dc2626', borderColor: '#fecaca' }} onClick={stopAutoTracking}>Stop Tracking</button>
+              )}
             </div>
           </div>
         </div>

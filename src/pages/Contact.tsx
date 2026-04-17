@@ -1,107 +1,99 @@
-
 import React, { useEffect, useState } from 'react';
 import gsap from 'gsap';
-import { Phone, Mail, MapPin, MessageCircle, ChevronDown, Send, Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Mail, Phone, MapPin, Send, Facebook, Instagram, Twitter, Youtube, ChevronDown } from 'lucide-react';
 import { useToast } from '../components/Toast';
+import { useLanguage } from '../components/LanguageContext';
 import { supabase } from '../lib/supabase';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const ContactPage: React.FC = () => {
   const { showToast } = useToast();
+  const { t } = useLanguage();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    gsap.fromTo('.contact-hero', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8 });
+    gsap.fromTo('.contact-hero-content', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8 });
+    
+    document.querySelectorAll('.contact-card').forEach((card, i) => {
+      gsap.fromTo(card, { opacity: 0, y: 30 }, {
+        opacity: 1, y: 0, duration: 0.6, delay: i * 0.1,
+        scrollTrigger: { trigger: card, start: 'top 85%' }
+      });
+    });
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
-    const data = new FormData(form);
+    const formData = new FormData(form);
+    const data = {
+      full_name: formData.get('full_name'),
+      phone: formData.get('phone'),
+      email: formData.get('email'),
+      subject: formData.get('subject'),
+      message: formData.get('message')
+    };
+
     try {
-      const { error } = await supabase.from('contact_messages').insert({
-        full_name: data.get('full_name') as string,
-        phone: data.get('phone') as string,
-        email: (data.get('email') as string) || null,
-        subject: data.get('subject') as string,
-        message: data.get('message') as string,
-      });
+      const { error } = await supabase.from('contact_submissions').insert(data);
       if (error) throw error;
-      showToast("📩 Message sent! We'll respond within 24 hours.");
+      showToast('Message sent! We\'ll get back to you soon.');
       form.reset();
     } catch (err) {
-      showToast('❌ Error sending message. Please try again.');
-      console.error(err);
+      showToast('Error sending message. Please try again.');
     }
   };
 
-  const contactInfo = [
-    { icon: <Phone size={24} />, title: 'Call Us', info: '+91 73011 32018', sub: 'Mon-Sat, 8am-10pm IST', action: 'tel:+917301132018' },
-    { icon: <MessageCircle size={24} />, title: 'WhatsApp', info: '+91 73011 32018', sub: 'Quick replies, 24/7', action: 'https://wa.me/917301132018' },
-    { icon: <Mail size={24} />, title: 'Email Us', info: 'info@gaonride.com', sub: 'Response within 24 hrs', action: 'mailto:info@gaonride.com' },
-    { icon: <MapPin size={24} />, title: 'Head Office', info: 'Village Bhawan, Gram Panchayat Road', sub: 'Lucknow, Uttar Pradesh 226001', action: '#' },
-  ];
-
-  const officeHours = [
-    { day: 'Monday - Friday', hours: '8:00 AM - 8:00 PM' },
-    { day: 'Saturday', hours: '9:00 AM - 6:00 PM' },
-    { day: 'Sunday', hours: '10:00 AM - 4:00 PM' },
-    { day: 'Public Holidays', hours: '10:00 AM - 2:00 PM' },
-  ];
-
   const faqs = [
-    { q: 'How can I reach customer support?', a: 'You can call us at +91 73011 32018, WhatsApp us anytime, or fill the contact form above. Our average response time is under 30 minutes during working hours.' },
-    { q: 'I have a complaint about a driver. How do I report it?', a: 'Please call our helpline or fill the form with subject "Driver Complaint". Include the ride date, time, and driver name if known. We take every complaint seriously and resolve within 48 hours.' },
-    { q: 'Can I visit your office?', a: 'Yes! Our head office in Lucknow is open during office hours. We also have village coordinators across UP, Bihar, MP, and Rajasthan whom you can meet locally.' },
-    { q: 'Do you operate in my village?', a: "We are expanding rapidly! Currently we cover 500+ villages across UP, Bihar, MP, and Rajasthan. Contact us with your village name and we'll let you know or prioritize expansion to your area." },
-    { q: 'I want to suggest a new service. How can I share my idea?', a: 'We love hearing from our community! Fill the contact form with subject "Suggestion" and share your idea. Many of our best features came from village user feedback.' },
+    { q: 'What are your operating hours?', a: 'Our delivery and ride services operate 24/7. Our support team is available from 8 AM to 10 PM daily.' },
+    { q: 'How can I register as a driver?', a: 'Navigate to the "Partner" page and fill out the registration form. Our team will contact you for verification.' },
+    { q: 'Do you provide services in my village?', a: 'We are rapidly expanding. Currently, we cover 500+ villages. Check the "Rides" page to see if your area is listed.' },
+    { q: 'How do I cancel a booking?', a: 'You can cancel through the tracking link provided in your SMS or contact our support number immediately.' }
   ];
 
   return (
     <>
-      <section className="hero" style={{ minHeight: '50vh', position: 'relative' }}>
-        <div className="hero-bg"><img src="/village_contact_hero.png" alt="Community Support" /></div>
+      <section className="hero" style={{ minHeight: '60vh', position: 'relative' }}>
+        <div className="hero-bg"><img src="/village_contact_hero.png" alt="Contact Us" /></div>
         <div className="hero-overlay" />
         <div className="container">
-          <div className="contact-hero hero-content" style={{ paddingTop: 140 }}>
-            <p style={{ color: 'var(--accent)', fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>We're Here For You</p>
-            <h1>Always <span className="highlight">Connected</span></h1>
-            <p>Whether you need help booking a ride or want to bring GaonRide to your village, our community support team is just a call away.</p>
+          <div className="contact-hero-content hero-content" style={{ paddingTop: 140, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <p style={{ color: 'var(--accent)', fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>Get In Touch</p>
+            <h1>Contact <span className="highlight">Support</span></h1>
+            <p style={{ maxWidth: 600, margin: '0 auto' }}>Have questions or need help? Our local team is here to assist you 24/7. Reach out via form, phone, or visit our local hubs.</p>
           </div>
-        </div>
-        <div style={{ position: 'absolute', bottom: -1, left: 0, width: '100%', overflow: 'hidden', lineHeight: 0, zIndex: 5, pointerEvents: 'none' }}>
-          <svg viewBox="0 0 1440 320" style={{ display: 'block', width: '100%', height: '80px' }} preserveAspectRatio="none">
-            <path fill="#ffffff" fillOpacity="1" d="M0,192 C288,320 576,64 864,192 C1152,320 1344,128 1440,160 L1440,320 L0,320 Z"></path>
-          </svg>
         </div>
       </section>
 
-      <section className="section" style={{ marginTop: -40, position: 'relative', zIndex: 10 }}>
+      <section className="section" style={{ position: 'relative', zIndex: 10, marginTop: -60 }}>
         <div className="container">
-          <div className="grid-4">
-            {contactInfo.map((c, i) => (
-              <a href={c.action} key={i} className="card-3d" style={{ padding: 28, textAlign: 'center', textDecoration: 'none', color: 'inherit' }}>
-                <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(0,77,0,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)', margin: '0 auto 16px' }}>{c.icon}</div>
-                <h3 style={{ fontSize: 17, fontWeight: 700, marginBottom: 4 }}>{c.title}</h3>
-                <p style={{ color: 'var(--primary)', fontWeight: 600, fontSize: 15, marginBottom: 4 }}>{c.info}</p>
-                <p style={{ color: 'var(--text-muted)', fontSize: 13 }}>{c.sub}</p>
-              </a>
+          <div className="grid-3">
+            {[
+              { icon: <Phone size={32} />, title: 'Call Us', info: '+91 98XXX XXXXX', sub: 'Mon-Sun, 8am-10pm' },
+              { icon: <Mail size={32} />, title: 'Email Us', info: 'support@gaonride.com', sub: '24/7 Response' },
+              { icon: <MapPin size={32} />, title: 'Visit Us', info: 'Village Hub, Town Area', sub: 'District Centre' }
+            ].map((item, i) => (
+              <div key={i} className="card-3d contact-card" style={{ padding: 32, textAlign: 'center' }}>
+                <div style={{ color: 'var(--primary)', marginBottom: 20, display: 'flex', justifyContent: 'center' }}>{item.icon}</div>
+                <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 8 }}>{item.title}</h3>
+                <p style={{ fontSize: 18, fontWeight: 600, marginBottom: 4 }}>{item.info}</p>
+                <p style={{ color: 'var(--text-muted)', fontSize: 14 }}>{item.sub}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="section section-alt" style={{ position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', right: '-10%', bottom: '0%', opacity: 0.03, zIndex: 0, pointerEvents: 'none' }}>
-          <svg width="600" height="600" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <path fill="var(--primary)" d="M49.2,-72.6C62.9,-63.3,72.6,-47.9,78.4,-31.1C84.2,-14.3,86.1,3.9,81.2,20.2C76.3,36.5,64.6,50.9,50.3,60.6C36,70.3,19.1,75.5,1.2,73.8C-16.7,72.1,-33.4,63.5,-47.5,52.3C-61.6,41.1,-73.1,27.3,-78.4,11.4C-83.7,-4.5,-82.8,-22.5,-74.6,-37C-66.4,-51.5,-50.9,-62.5,-35.5,-71.1C-20.1,-79.7,-4.8,-85.9,10.6,-88.7C26,-91.5,41.4,-82,49.2,-72.6Z" transform="translate(100 100)" />
-          </svg>
-        </div>
-        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-          <div className="grid-2">
-            <div className="form-card">
-              <h3>Send us a Message</h3>
-              <form onSubmit={handleSubmit} style={{ marginTop: 20 }}>
+      <section className="split-form-section">
+        <div className="container">
+          <div className="split-form-grid">
+            <div className="split-form-content">
+              <p style={{ color: 'var(--primary)', fontWeight: 700, textTransform: 'uppercase', fontSize: 13, letterSpacing: 1.5, marginBottom: 16 }}>Connect With Us</p>
+              <h2>How can we help you?</h2>
+              <form onSubmit={handleSubmit}>
                 <div className="form-row">
                   <div className="form-group">
                     <label>Full Name</label>
@@ -133,21 +125,51 @@ const ContactPage: React.FC = () => {
                   <label>Message</label>
                   <textarea name="message" className="form-input" placeholder="Tell us how we can help..." rows={5} style={{ resize: 'vertical' }} required />
                 </div>
-                <button className="btn btn-primary btn-lg" style={{ width: '100%' }} type="submit">Send Message <Send size={18} /></button>
+                <button className="btn btn-primary" style={{ width: '100%', marginTop: 12 }} type="submit">
+                  Send Message <Send size={18} />
+                </button>
               </form>
             </div>
 
-            <div>
-              <h2 style={{ fontSize: 28, fontWeight: 800, marginBottom: 24 }}>Office <span style={{ color: 'var(--primary)' }}>Hours</span></h2>
-              <div style={{ background: 'white', borderRadius: 'var(--radius-lg)', overflow: 'hidden', marginBottom: 32 }}>
-                {officeHours.map((o, i) => (
-                  <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '14px 24px', borderBottom: i < officeHours.length - 1 ? '1px solid #f3f4f6' : 'none' }}>
-                    <span style={{ fontWeight: 600 }}>{o.day}</span>
-                    <span style={{ color: 'var(--primary)', fontWeight: 500 }}>{o.hours}</span>
-                  </div>
-                ))}
+            <div className="split-form-image-wrap">
+              <img src="/contact_form_desi_1776344278618.png" alt="Support Team" />
+              <div style={{ position: 'absolute', bottom: 40, left: 40, right: 40, background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(20px)', padding: 30, borderRadius: 24, border: '1px solid rgba(255,255,255,0.2)', color: 'white' }}>
+                <h4 style={{ fontSize: 24, fontWeight: 700, marginBottom: 12 }}>Speak with our local team</h4>
+                <p style={{ fontSize: 16, opacity: 0.9 }}>Over 100,000+ villagers trust GaonRide for their daily needs. We are here to support you 24/7.</p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
+      <section className="section">
+        <div className="container">
+          <div className="grid-2">
+            <div>
+              <h2 style={{ fontSize: 28, fontWeight: 800, marginBottom: 24 }}>Local Presence, <span style={{ color: 'var(--primary)' }}>Global Standards</span></h2>
+              <div style={{ padding: 32, background: 'white', borderRadius: 24, boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
+                <div style={{ display: 'flex', gap: 16, marginBottom: 24 }}>
+                  <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(0,77,0,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)', flexShrink: 0 }}>
+                    <MapPin size={24} />
+                  </div>
+                  <div>
+                    <h4 style={{ fontWeight: 600, marginBottom: 4 }}>Headquarters</h4>
+                    <p style={{ color: 'var(--text-muted)', fontSize: 14 }}>123 Gaon Path, District Centre, State - 1100XX</p>
+                  </div>
+                </div>
+                <div style={{ display: 'flex', gap: 16 }}>
+                  <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(0,77,0,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)', flexShrink: 0 }}>
+                    <Phone size={24} />
+                  </div>
+                  <div>
+                    <h4 style={{ fontWeight: 600, marginBottom: 4 }}>Toll-Free</h4>
+                    <p style={{ color: 'var(--text-muted)', fontSize: 14 }}>1800-GAON-RIDE (4266-7433)</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
               <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 16 }}>Follow Us</h3>
               <p style={{ color: 'var(--text-muted)', marginBottom: 20 }}>Stay connected with GaonRide on social media for updates, offers, and community stories.</p>
               <div style={{ display: 'flex', gap: 12 }}>

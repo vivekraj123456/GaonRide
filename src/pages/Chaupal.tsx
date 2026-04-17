@@ -43,21 +43,28 @@ const ChaupalPage: React.FC = () => {
     // Kill any existing animations to prevent conflicts
     gsap.killTweensOf('.chaupal-card');
     
-    // Use a small delay to ensure React has updated the DOM
-    const timer = setTimeout(() => {
-      const cards = document.querySelectorAll('.chaupal-card');
-      if (cards.length > 0) {
-        gsap.from(cards, {
-          opacity: 0,
-          y: 30,
+    const cards = document.querySelectorAll('.chaupal-card');
+    if (cards.length > 0) {
+      gsap.fromTo(cards, 
+        { 
+          opacity: 0, 
+          y: 40,
+        },
+        {
+          opacity: 1,
+          y: 0,
           stagger: 0.1,
           duration: 0.8,
-          ease: 'power2.out',
-          clearProps: 'all'
-        });
-      }
-    }, 100);
-    return () => clearTimeout(timer);
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
+          delay: 0.1 // Small delay to let React DOM settle
+        }
+      );
+    }
+    
+    return () => {
+      gsap.killTweensOf('.chaupal-card');
+    };
   }, [activeFilter, posts.length]);
 
   const handleLike = (id: number) => {

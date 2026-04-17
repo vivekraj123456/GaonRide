@@ -27,8 +27,6 @@ const RidesPage: React.FC = () => {
   const [selectedVehicle, setSelectedVehicle] = useState('auto');
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [formData, setFormData] = useState({ pickup: '', drop: '', vehicle: 'auto', date: '', phone: '' });
-  const [partnerLiveById, setPartnerLiveById] = useState<Record<string, { latitude: number; longitude: number; updated_at: string }>>({});
-  const [updatingUserLocId, setUpdatingUserLocId] = useState<string | null>(null);
   const [pickupCoords, setPickupCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [locationLoading, setLocationLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -91,8 +89,6 @@ const RidesPage: React.FC = () => {
       showToast('Could not capture location.');
     }, { enableHighAccuracy: true, timeout: 10000 });
   };
- 
-
 
   const faqs = [
     { q: 'How do I book a ride?', a: 'Simply fill in the booking form above with your pickup and drop location, select a vehicle type, and submit. Our nearest driver will contact you within 2 minutes.' },
@@ -104,17 +100,16 @@ const RidesPage: React.FC = () => {
 
   return (
     <>
-      {/* HERO */}
       <section className="hero" style={{ minHeight: '60vh', position: 'relative' }}>
         <div className="hero-bg"><img src="/ride3.png" alt="Rides" /></div>
         <div className="hero-overlay" />
         <div className="container">
-          <div className="ride-hero-content hero-content" style={{ paddingTop: 140 }}>
+          <div className="ride-hero-content hero-content" style={{ paddingTop: 140, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <p style={{ color: 'var(--accent)', fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>
               🚗 Village to City, Anytime
             </p>
             <h1>Book Your <span className="highlight">Ride</span></h1>
-            <p>Choose from Auto Rickshaws, Bolero SUVs, Bike Taxis, or Tractors. Safe, affordable, and always on time.</p>
+            <p style={{ maxWidth: 600, margin: '0 auto' }}>Choose from Auto Rickshaws, Bolero SUVs, Bike Taxis, or Tractors. Safe, affordable, and always on time.</p>
           </div>
         </div>
         <div style={{ position: 'absolute', bottom: -1, left: 0, width: '100%', overflow: 'hidden', lineHeight: 0, zIndex: 5, pointerEvents: 'none' }}>
@@ -124,13 +119,13 @@ const RidesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* BOOKING FORM */}
-      <section className="section" style={{ marginTop: -60, position: 'relative', zIndex: 10 }}>
+      <section className="split-form-section" style={{ marginTop: -60, position: 'relative', zIndex: 10 }}>
         <div className="container">
-          <div className="grid-2">
-            <div className="form-card">
-              <h3>Where are you going?</h3>
-              <form onSubmit={handleSubmit} style={{ marginTop: 20 }}>
+          <div className="split-form-grid">
+            <div className="split-form-content">
+              <p style={{ color: 'var(--primary)', fontWeight: 700, textTransform: 'uppercase', fontSize: 13, letterSpacing: 1.5, marginBottom: 16 }}>Fast & Reliable</p>
+              <h2>Where are you going?</h2>
+              <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label>Pickup Location</label>
                   <input className="form-input" type="text" placeholder="Village name, landmark, or address" 
@@ -145,18 +140,13 @@ const RidesPage: React.FC = () => {
                       </span>
                     )}
                   </div>
-                  {!pickupCoords && (
-                    <p style={{ marginTop: 6, fontSize: 12, color: '#b45309' }}>
-                      Location sharing is mandatory for nearest partner assignment.
-                    </p>
-                  )}
                 </div>
                 <div className="form-group">
                   <label>Drop Location</label>
                   <input className="form-input" type="text" placeholder="Where do you want to go?" 
                     value={formData.drop} onChange={e => setFormData({...formData, drop: e.target.value})} required />
                 </div>
-                <div className="form-row">
+                <div className="form-row" style={{ marginTop: 16 }}>
                   <div className="form-group">
                     <label>Vehicle Type</label>
                     <select className="form-input" value={formData.vehicle} onChange={e => setFormData({...formData, vehicle: e.target.value})}>
@@ -169,17 +159,31 @@ const RidesPage: React.FC = () => {
                       value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} required />
                   </div>
                 </div>
-                <div className="form-group">
+                <div className="form-group" style={{ marginTop: 16 }}>
                   <label>Preferred Date & Time (Optional)</label>
                   <input className="form-input" type="datetime-local" 
                     value={formData.date} onChange={e => setFormData({...formData, date: e.target.value})} />
                 </div>
-                <button className="btn btn-primary btn-lg" style={{ width: '100%' }} type="submit">
-                  Find Ride <Navigation size={18} />
+                <button className="btn btn-primary" style={{ width: '100%', marginTop: 24 }} type="submit" disabled={submitting}>
+                  {submitting ? 'Finding Ride...' : 'Find Ride'} <Navigation size={18} />
                 </button>
               </form>
             </div>
 
+            <div className="split-form-image-wrap">
+              <img src="/rides_form_desi_1776344369577.png" alt="Premium Trip" />
+              <div style={{ position: 'absolute', bottom: 40, left: 40, right: 40, background: 'rgba(0,0,0,0.3)', backdropFilter: 'blur(15px)', padding: 30, borderRadius: 24, border: '1px solid rgba(255,255,255,0.1)', color: 'white' }}>
+                <h4 style={{ fontSize: 24, fontWeight: 700, marginBottom: 8 }}>Apna Gaon, Apni Car</h4>
+                <p style={{ fontSize: 16, opacity: 0.9 }}>Get matched with the perfect driver in under 2 minutes. Transparent pricing, always.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-alt">
+        <div className="container">
+          <div className="grid-2">
             <div>
               <h2 style={{ fontSize: 28, fontWeight: 800, marginBottom: 24 }}>
                 Why book with <span style={{ color: 'var(--primary)' }}>GaonRide?</span>
@@ -201,11 +205,25 @@ const RidesPage: React.FC = () => {
                 </div>
               ))}
             </div>
+            <div style={{ position: 'relative' }}>
+              <div style={{ position: 'absolute', top: -20, left: -20, width: '100%', height: '100%', background: 'var(--primary)', opacity: 0.05, borderRadius: 32, zIndex: 0 }}></div>
+              <img 
+                src="/rides_about_side.png" 
+                alt="GaonRide Experience" 
+                style={{ width: '100%', borderRadius: 32, boxShadow: '0 20px 40px rgba(0,0,0,0.1)', position: 'relative', zIndex: 1 }}
+              />
+              <div style={{ position: 'absolute', bottom: 20, right: -20, background: 'white', padding: '16px 24px', borderRadius: 16, boxShadow: '0 10px 30px rgba(0,0,0,0.1)', zIndex: 2, display: 'flex', alignItems: 'center', gap: 12 }}>
+                <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'var(--accent)', color: 'var(--text)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Star size={20} fill="var(--text)" /></div>
+                <div>
+                  <p style={{ fontWeight: 800, fontSize: 14, margin: 0 }}>Verified Safety</p>
+                  <p style={{ fontSize: 12, color: 'var(--text-muted)', margin: 0 }}>Every ride is tracked & secure</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* VEHICLE CARDS */}
       <section className="section section-alt" style={{ position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', right: '-5%', top: '10%', opacity: 0.03, zIndex: 0, pointerEvents: 'none' }}>
           <svg width="600" height="600" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -252,7 +270,6 @@ const RidesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* PRICING TABLE */}
       <section className="section">
         <div className="container">
           <div className="section-header">
@@ -281,7 +298,6 @@ const RidesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* FAQ */}
       <section className="section section-alt">
         <div className="container" style={{ maxWidth: 800 }}>
           <div className="section-header">
@@ -298,8 +314,6 @@ const RidesPage: React.FC = () => {
           ))}
         </div>
       </section>
- 
-
     </>
   );
 };
