@@ -56,7 +56,7 @@ const Navbar: React.FC = () => {
               <Languages size={16} />
               {lang === 'en' ? 'हिं' : 'EN'}
             </button>
-            <Link to="/rides" className="btn btn-primary btn-sm">{t('nav.bookNow')}</Link>
+            <Link to="/rides" className="btn btn-accent btn-sm">{t('nav.bookNow')}</Link>
             <button className="mobile-toggle" onClick={() => setMenuOpen(true)}>
               <Menu size={28} />
             </button>

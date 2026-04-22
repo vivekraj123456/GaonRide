@@ -100,16 +100,16 @@ const RidesPage: React.FC = () => {
 
   return (
     <>
-      <section className="hero" style={{ minHeight: '60vh', position: 'relative' }}>
+      <section className="hero" style={{ minHeight: '70vh', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div className="hero-bg"><img src="/ride3.png" alt="Rides" /></div>
         <div className="hero-overlay" />
-        <div className="container">
-          <div className="ride-hero-content hero-content" style={{ paddingTop: 140, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <p style={{ color: 'var(--accent)', fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>
+        <div className="container" style={{ position: 'relative', zIndex: 10 }}>
+          <div className="ride-hero-content hero-content" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+            <p style={{ color: 'var(--accent)', fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>
               🚗 Village to City, Anytime
             </p>
-            <h1>Book Your <span className="highlight">Ride</span></h1>
-            <p style={{ maxWidth: 600, margin: '0 auto' }}>Choose from Auto Rickshaws, Bolero SUVs, Bike Taxis, or Tractors. Safe, affordable, and always on time.</p>
+            <h1 style={{ fontSize: 'clamp(40px, 8vw, 72px)', lineHeight: 1.1 }}>Book Your <span className="highlight">Ride</span></h1>
+            <p style={{ maxWidth: 700, margin: '0 auto', fontSize: '18px', opacity: 0.9 }}>Choose from Auto Rickshaws, Bolero SUVs, Bike Taxis, or Tractors. Safe, affordable, and always on time.</p>
           </div>
         </div>
         <div style={{ position: 'absolute', bottom: -1, left: 0, width: '100%', overflow: 'hidden', lineHeight: 0, zIndex: 5, pointerEvents: 'none' }}>
@@ -123,7 +123,7 @@ const RidesPage: React.FC = () => {
         <div className="container">
           <div className="split-form-grid">
             <div className="split-form-content">
-              <p style={{ color: 'var(--primary)', fontWeight: 700, textTransform: 'uppercase', fontSize: 13, letterSpacing: 1.5, marginBottom: 16 }}>Fast & Reliable</p>
+              <p style={{ color: 'var(--accent-dark)', fontWeight: 700, textTransform: 'uppercase', fontSize: 13, letterSpacing: 1.5, marginBottom: 16 }}>Fast & Reliable</p>
               <h2>Where are you going?</h2>
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
@@ -185,8 +185,8 @@ const RidesPage: React.FC = () => {
         <div className="container">
           <div className="grid-2">
             <div>
-              <h2 style={{ fontSize: 28, fontWeight: 800, marginBottom: 24 }}>
-                Why book with <span style={{ color: 'var(--primary)' }}>GaonRide?</span>
+              <h2 style={{ fontSize: 28, fontWeight: 900, marginBottom: 24, letterSpacing: -1 }}>
+                Why book with <span style={{ color: 'var(--accent-dark)' }}>GaonRide?</span>
               </h2>
               {[
                 { icon: <Shield size={24} />, title: 'Verified Drivers', desc: 'Every driver undergoes Aadhaar verification and background checks.' },
@@ -195,7 +195,7 @@ const RidesPage: React.FC = () => {
                 { icon: <Star size={24} />, title: '4.8★ Average Rating', desc: 'Our drivers maintain high standards of service and cleanliness.' },
               ].map((item, i) => (
                 <div key={i} style={{ display: 'flex', gap: 16, marginBottom: 24, alignItems: 'start' }}>
-                  <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(0,77,0,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)', flexShrink: 0 }}>
+                  <div style={{ width: 48, height: 48, borderRadius: 16, background: 'var(--accent-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-dark)', flexShrink: 0 }}>
                     {item.icon}
                   </div>
                   <div>
@@ -213,7 +213,7 @@ const RidesPage: React.FC = () => {
                 style={{ width: '100%', borderRadius: 32, boxShadow: '0 20px 40px rgba(0,0,0,0.1)', position: 'relative', zIndex: 1 }}
               />
               <div style={{ position: 'absolute', bottom: 20, right: -20, background: 'white', padding: '16px 24px', borderRadius: 16, boxShadow: '0 10px 30px rgba(0,0,0,0.1)', zIndex: 2, display: 'flex', alignItems: 'center', gap: 12 }}>
-                <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'var(--accent)', color: 'var(--text)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Star size={20} fill="var(--text)" /></div>
+                <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'var(--accent)', color: 'var(--accent-dark)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Star size={20} fill="var(--accent-dark)" /></div>
                 <div>
                   <p style={{ fontWeight: 800, fontSize: 14, margin: 0 }}>Verified Safety</p>
                   <p style={{ fontSize: 12, color: 'var(--text-muted)', margin: 0 }}>Every ride is tracked & secure</p>
@@ -243,7 +243,7 @@ const RidesPage: React.FC = () => {
                 onClick={() => setSelectedVehicle(v.id)}
                 style={{
                   padding: 28, cursor: 'pointer',
-                  border: selectedVehicle === v.id ? '2px solid var(--primary)' : '2px solid transparent',
+                  border: selectedVehicle === v.id ? '2px solid var(--accent)' : '2px solid transparent',
                   position: 'relative'
                 }}
               >
@@ -252,14 +252,14 @@ const RidesPage: React.FC = () => {
                     POPULAR
                   </div>
                 )}
-                <div style={{ color: 'var(--primary)', marginBottom: 16 }}>{v.icon}</div>
+                <div style={{ color: 'var(--accent-dark)', marginBottom: 16 }}>{v.icon}</div>
                 <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 4 }}>{v.name}</h3>
-                <div style={{ fontSize: 24, fontWeight: 900, color: 'var(--primary)', marginBottom: 4 }}>{v.price}</div>
+                <div style={{ fontSize: 24, fontWeight: 900, color: 'var(--accent-dark)', marginBottom: 4 }}>{v.price}</div>
                 <div style={{ fontSize: 13, color: 'var(--text-muted)', marginBottom: 12 }}>{v.capacity}</div>
                 <p style={{ fontSize: 14, color: 'var(--text-muted)', marginBottom: 16, lineHeight: 1.6 }}>{v.desc}</p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                   {v.features.map(f => (
-                    <div key={f} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--primary)' }}>
+                    <div key={f} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--accent-dark)' }}>
                       <Star size={12} fill="var(--accent)" color="var(--accent)" /> {f}
                     </div>
                   ))}

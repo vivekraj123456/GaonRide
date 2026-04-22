@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
       <div className="container">
         <div className="footer-grid">
           <div>
-            <div className="logo" style={{ marginBottom: 16, fontSize: 28 }}>
+            <div className="logo" style={{ marginBottom: 16, fontSize: 28, color: '#9fe870' }}>
               <Navigation size={28} />
               GaonRide
             </div>

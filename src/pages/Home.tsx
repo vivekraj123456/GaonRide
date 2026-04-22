@@ -130,7 +130,7 @@ const HomePage: React.FC = () => {
         {/* Decorative wave */}
         <div className="apna-wave-bottom">
           <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-            <path d="M0,40 C320,100 520,0 720,50 C920,100 1140,20 1440,60 L1440,120 L0,120 Z" fill="#fdf6e3" />
+            <path d="M0,40 C320,100 520,0 720,50 C920,100 1140,20 1440,60 L1440,120 L0,120 Z" fill="#f7f9f5" />
           </svg>
         </div>
       </section>
@@ -318,7 +318,7 @@ const HomePage: React.FC = () => {
         <div className="container">
           <div className="apna-ornament-header">
             <div className="apna-ornament-line" />
-            <h2>How <span style={{ color: 'var(--primary)' }}>GaonRide</span> Works</h2>
+            <h2>How <span style={{ color: 'var(--accent-dark)' }}>GaonRide</span> Works</h2>
             <div className="apna-ornament-line" />
           </div>
           <div className="steps-grid">
@@ -397,7 +397,7 @@ const HomePage: React.FC = () => {
               { icon: <Users size={32} />, title: 'Community First', desc: 'We employ local drivers and support local businesses. Every ride with GaonRide strengthens the village economy.' },
             ].map((f, i) => (
               <Tilt3D className="card-3d" key={i} style={{ padding: 32 }}>
-                <div style={{ color: 'var(--primary)', marginBottom: 16 }}>{f.icon}</div>
+                <div style={{ color: 'var(--accent-dark)', marginBottom: 16 }}>{f.icon}</div>
                 <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>{f.title}</h3>
                 <p style={{ color: 'var(--text-muted)', fontSize: 15 }}>{f.desc}</p>
               </Tilt3D>
@@ -420,14 +420,14 @@ const HomePage: React.FC = () => {
               </Tilt3D>
               
               {/* Floating Benefit Chips */}
-              <div className="partner-chip chip-1">
-                <Banknote size={16} color="#ffcc00" /> Earn ₹15,000+ Monthly
+              <div className="partner-chip chip-1" style={{ color: 'white' }}>
+                <Banknote size={16} color="#9fe870" /> Earn ₹15,000+ Monthly
               </div>
-              <div className="partner-chip chip-2">
-                <ShieldCheck size={16} color="#ffcc00" /> Full Insurance Cover
+              <div className="partner-chip chip-2" style={{ color: 'white' }}>
+                <ShieldCheck size={16} color="#9fe870" /> Full Insurance Cover
               </div>
-              <div className="partner-chip chip-3">
-                <Star size={16} color="#ffcc00" /> 4.8★ Driver Rating
+              <div className="partner-chip chip-3" style={{ color: 'white' }}>
+                <Star size={16} color="#9fe870" /> 4.8★ Driver Rating
               </div>
             </div>
 
@@ -483,7 +483,7 @@ const HomePage: React.FC = () => {
             transition={{ duration: 0.6 }}
           >
             <h2 style={{ fontSize: 'clamp(28px, 5vw, 48px)', fontWeight: 900, marginBottom: 16 }}>
-              Ready to <span style={{ color: 'var(--accent)' }}>Experience</span> GaonRide?
+              Ready to <span style={{ color: '#9fe870' }}>Experience</span> GaonRide?
             </h2>
             <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 18, maxWidth: 500, margin: '0 auto 40px' }}>
               Join thousands of happy villagers who trust GaonRide for their daily transport and event needs.

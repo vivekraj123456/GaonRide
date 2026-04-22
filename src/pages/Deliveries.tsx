@@ -175,7 +175,7 @@ const DeliveriesPage: React.FC = () => {
         <div className="container">
           <div className="grid-2" style={{ alignItems: 'center', gap: 60 }}>
             <div>
-              <h2 style={{ fontSize: 28, fontWeight: 800, marginBottom: 8 }}>About Our <span style={{ color: 'var(--primary)' }}>Delivery Service</span></h2>
+              <h2 style={{ fontSize: 28, fontWeight: 800, marginBottom: 8 }}>About Our <span style={{ color: 'var(--accent-dark)' }}>Delivery Service</span></h2>
               <p style={{ color: 'var(--text-muted)', marginBottom: 28 }}>{tab === 'parcel' ? 'Our delivery partners pick up from your doorstep and deliver safely.' : 'We source from local markets for the freshest produce at best prices.'}</p>
               {(tab === 'parcel'
                 ? [
@@ -191,7 +191,7 @@ const DeliveriesPage: React.FC = () => {
                     { icon: <Clock size={24} />, title: 'Within 2 Hours', desc: 'Most orders delivered in under 2 hours.' },
                   ]).map((item, i) => (
                 <div key={i} style={{ display: 'flex', gap: 16, marginBottom: 24, alignItems: 'start' }}>
-                  <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(0,77,0,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)', flexShrink: 0 }}>{item.icon}</div>
+                  <div style={{ width: 48, height: 48, borderRadius: 16, background: 'var(--accent-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-dark)', flexShrink: 0 }}>{item.icon}</div>
                   <div><h4 style={{ fontWeight: 600, marginBottom: 4 }}>{item.title}</h4><p style={{ color: 'var(--text-muted)', fontSize: 14 }}>{item.desc}</p></div>
                 </div>
               ))}
@@ -204,7 +204,7 @@ const DeliveriesPage: React.FC = () => {
                 style={{ width: '100%', borderRadius: 32, boxShadow: '0 20px 40px rgba(0,0,0,0.1)', position: 'relative', zIndex: 1 }}
               />
               <div style={{ position: 'absolute', bottom: 20, left: -20, background: 'white', padding: '16px 24px', borderRadius: 16, boxShadow: '0 10px 30px rgba(0,0,0,0.1)', zIndex: 2, display: 'flex', alignItems: 'center', gap: 12 }}>
-                <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'var(--primary)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Star size={20} fill="white" /></div>
+                <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'var(--accent)', color: 'var(--accent-dark)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Star size={20} fill="var(--accent-dark)" /></div>
                 <div>
                   <p style={{ fontWeight: 800, fontSize: 14, margin: 0 }}>Top Rated Service</p>
                   <p style={{ fontSize: 12, color: 'var(--text-muted)', margin: 0 }}>Trusted by 10,000+ villagers</p>

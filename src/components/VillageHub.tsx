@@ -113,7 +113,7 @@ const VillageHub: React.FC = () => {
         <div className="mandi-container" style={{ marginBottom: 40, background: 'white', borderRadius: 16, padding: '20px 0', boxShadow: 'var(--shadow-lg)', border: '1px solid rgba(0,77,0,0.1)', overflow:'hidden' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 24px', marginBottom: 12, borderBottom: '1px solid #f3f4f6', paddingBottom: 15, flexWrap:'wrap', gap:12 }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <TrendingUp size={20} style={{ color: 'var(--primary)', marginRight: 8 }} />
+              <TrendingUp size={20} style={{ color: 'var(--accent-dark)', marginRight: 8 }} />
               <span style={{ fontWeight: 800, fontSize: 14, textTransform: 'uppercase', letterSpacing: 1 }}>{t('hub.mandiTitle')}</span>
             </div>
             <div style={{ position: 'relative', width: '100%', maxWidth: 280 }}>
@@ -153,12 +153,12 @@ const VillageHub: React.FC = () => {
                       <span style={{ fontSize: 10, color: '#16a34a', fontWeight: 800, textTransform: 'uppercase' }}>Live Mandi</span>
                       <span style={{ fontWeight: 700, color: '#166534' }}>{p.crop}</span>
                     </div>
-                    <span style={{ fontWeight: 800, fontSize: 20, color: 'var(--primary)' }}>{p.price}</span>
+                    <span style={{ fontWeight: 800, fontSize: 20, color: 'var(--accent-dark)' }}>{p.price}</span>
                     <span style={{ fontSize: 13, color: p.change.startsWith('+') ? '#10b981' : '#ef4444', fontWeight: 600 }}>{p.change}</span>
                   </div>
                 ))
               ) : searching ? (
-                <p style={{ fontSize: 14, color: 'var(--primary)', fontWeight: 700, display:'flex', alignItems:'center', gap:8 }}>
+                <p style={{ fontSize: 14, color: 'var(--accent-dark)', fontWeight: 700, display:'flex', alignItems:'center', gap:8 }}>
                   <span className="spinner-sm"></span> Searching global database...
                 </p>
               ) : generatedResult ? (
@@ -180,7 +180,7 @@ const VillageHub: React.FC = () => {
                 {allMandiPrices.map((p, i) => (
                   <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                     <span style={{ fontWeight: 600, color: 'var(--text)' }}>{p.crop}</span>
-                    <span style={{ fontWeight: 800, fontSize: 18, color: 'var(--primary)' }}>{p.price}</span>
+                    <span style={{ fontWeight: 800, fontSize: 18, color: 'var(--accent-dark)' }}>{p.price}</span>
                     <span style={{ fontSize: 13, color: p.change.startsWith('+') ? '#10b981' : '#ef4444', fontWeight: 600 }}>{p.change}</span>
                   </div>
                 ))}

@@ -77,7 +77,7 @@ const ContactPage: React.FC = () => {
               { icon: <MapPin size={32} />, title: 'Visit Us', info: 'Village Hub, Town Area', sub: 'District Centre' }
             ].map((item, i) => (
               <div key={i} className="card-3d contact-card" style={{ padding: 32, textAlign: 'center' }}>
-                <div style={{ color: 'var(--primary)', marginBottom: 20, display: 'flex', justifyContent: 'center' }}>{item.icon}</div>
+                <div style={{ color: 'var(--accent-dark)', marginBottom: 20, display: 'flex', justifyContent: 'center' }}>{item.icon}</div>
                 <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 8 }}>{item.title}</h3>
                 <p style={{ fontSize: 18, fontWeight: 600, marginBottom: 4 }}>{item.info}</p>
                 <p style={{ color: 'var(--text-muted)', fontSize: 14 }}>{item.sub}</p>
@@ -91,7 +91,7 @@ const ContactPage: React.FC = () => {
         <div className="container">
           <div className="split-form-grid">
             <div className="split-form-content">
-              <p style={{ color: 'var(--primary)', fontWeight: 700, textTransform: 'uppercase', fontSize: 13, letterSpacing: 1.5, marginBottom: 16 }}>Connect With Us</p>
+              <p style={{ color: 'var(--accent-dark)', fontWeight: 700, textTransform: 'uppercase', fontSize: 13, letterSpacing: 1.5, marginBottom: 16 }}>Connect With Us</p>
               <h2>How can we help you?</h2>
               <form onSubmit={handleSubmit}>
                 <div className="form-row">
@@ -146,10 +146,10 @@ const ContactPage: React.FC = () => {
         <div className="container">
           <div className="grid-2">
             <div>
-              <h2 style={{ fontSize: 28, fontWeight: 800, marginBottom: 24 }}>Local Presence, <span style={{ color: 'var(--primary)' }}>Global Standards</span></h2>
+              <h2 style={{ fontSize: 28, fontWeight: 800, marginBottom: 24 }}>Local Presence, <span style={{ color: 'var(--accent-dark)' }}>Global Standards</span></h2>
               <div style={{ padding: 32, background: 'white', borderRadius: 24, boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
                 <div style={{ display: 'flex', gap: 16, marginBottom: 24 }}>
-                  <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(0,77,0,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)', flexShrink: 0 }}>
+                  <div style={{ width: 48, height: 48, borderRadius: 16, background: 'var(--accent-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-dark)', flexShrink: 0 }}>
                     <MapPin size={24} />
                   </div>
                   <div>
@@ -158,7 +158,7 @@ const ContactPage: React.FC = () => {
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: 16 }}>
-                  <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(0,77,0,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)', flexShrink: 0 }}>
+                  <div style={{ width: 48, height: 48, borderRadius: 16, background: 'var(--accent-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-dark)', flexShrink: 0 }}>
                     <Phone size={24} />
                   </div>
                   <div>
@@ -186,8 +186,8 @@ const ContactPage: React.FC = () => {
                 ))}
               </div>
 
-              <div style={{ marginTop: 32, padding: 24, background: 'rgba(0,77,0,0.04)', borderRadius: 'var(--radius)', border: '1px solid rgba(0,77,0,0.1)' }}>
-                <h4 style={{ fontWeight: 700, marginBottom: 8, color: 'var(--primary)' }}>Village Coordinators</h4>
+              <div style={{ marginTop: 32, padding: 24, background: 'var(--accent-subtle)', borderRadius: 'var(--radius)', border: '1px solid rgba(22,51,0,0.1)' }}>
+                <h4 style={{ fontWeight: 700, marginBottom: 8, color: 'var(--accent-dark)' }}>Village Coordinators</h4>
                 <p style={{ fontSize: 14, color: 'var(--text-muted)' }}>We have local coordinators in 200+ villages across UP, Bihar, MP, and Rajasthan. Ask about your village coordinator when you call!</p>
               </div>
             </div>

@@ -302,7 +302,7 @@ const PartnerPage: React.FC = () => {
           <div className="grid-3">
             {benefits.map((benefit) => (
               <div className="card-3d" key={benefit.title} style={{ padding: 28 }}>
-                <div style={{ color: 'var(--primary)', marginBottom: 16 }}>{benefit.icon}</div>
+                <div style={{ color: 'var(--accent-dark)', marginBottom: 16 }}>{benefit.icon}</div>
                 <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>{benefit.title}</h3>
                 <p style={{ color: 'var(--text-muted)', fontSize: 14 }}>{benefit.desc}</p>
               </div>
@@ -315,7 +315,7 @@ const PartnerPage: React.FC = () => {
         <div className="container">
           <div className="split-form-grid">
             <div className="split-form-content">
-              <p style={{ color: 'var(--primary)', fontWeight: 700, textTransform: 'uppercase', fontSize: 13, letterSpacing: 1.5, marginBottom: 16 }}>Register Now</p>
+              <p style={{ color: 'var(--accent-dark)', fontWeight: 700, textTransform: 'uppercase', fontSize: 13, letterSpacing: 1.5, marginBottom: 16 }}>Register Now</p>
               <h2>Join as Partner</h2>
               <form onSubmit={handleSubmit}>
                 <div className="form-row">
@@ -358,7 +358,7 @@ const PartnerPage: React.FC = () => {
 
             <div className="split-form-image-wrap">
               <img src="/partner_form_desi_1776344308735.png" alt="Partner Program" />
-              <div style={{ position: 'absolute', bottom: 40, left: 40, right: 40, background: 'rgba(0,100,0,0.3)', backdropFilter: 'blur(20px)', padding: 30, borderRadius: 24, border: '1px solid rgba(255,255,255,0.1)', color: 'white' }}>
+              <div style={{ position: 'absolute', bottom: 40, left: 40, right: 40, background: 'rgba(14,15,12,0.5)', backdropFilter: 'blur(20px)', padding: 30, borderRadius: 24, border: '1px solid rgba(255,255,255,0.1)', color: 'white' }}>
                 <h3 style={{ fontSize: 24, fontWeight: 700, marginBottom: 12 }}>Grow with our community</h3>
                 <p style={{ fontSize: 16, opacity: 0.9 }}>Connect with 1200+ partners who are earning more and and building a better future with GaonRide.</p>
               </div>

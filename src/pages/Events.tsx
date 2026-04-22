@@ -200,14 +200,14 @@ const EventsPage: React.FC = () => {
                   <div className="card-image"><img src={s.img} alt={s.title} /></div>
                   <div className="card-body">
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-                      <span style={{ color: 'var(--primary)' }}>{s.icon}</span>
+                      <span style={{ color: 'var(--accent-dark)' }}>{s.icon}</span>
                       <h3 style={{ fontSize: 18 }}>{s.title}</h3>
                     </div>
                     <p>{s.desc}</p>
                     <div style={{ marginTop: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontWeight: 800, color: 'var(--primary)', fontSize: 18 }}>{s.price}</span>
+                      <span style={{ fontWeight: 800, color: 'var(--accent-dark)', fontSize: 18 }}>{s.price}</span>
                       {selectedCount > 0 ? (
-                        <div className="card-tag" style={{ background: 'var(--primary)', color: 'white' }}>{selectedCount} Selected</div>
+                        <div className="card-tag" style={{ background: 'var(--accent)', color: 'var(--accent-dark)' }}>{selectedCount} Selected</div>
                       ) : (
                         <div className="card-tag"><Star size={12} fill="var(--accent)" color="var(--accent)" /> Premium</div>
                       )}
@@ -413,8 +413,8 @@ const EventsPage: React.FC = () => {
                   <label>Services Needed</label>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 12, marginTop: 8 }}>
                     {Object.entries({ tent: 'Tent & Decoration', dj: 'DJ & Sound', catering: 'Catering', car: 'Wedding Car' }).map(([k, v]) => (
-                      <label key={k} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: services[k as keyof typeof services] ? 'rgba(0,121,107,0.05)' : '#f9fafb', borderRadius: 10, border: services[k as keyof typeof services] ? '1px solid var(--primary)' : '1px solid #eaecf0', cursor: 'pointer', transition: 'all 0.2s' }}>
-                        <input type="checkbox" checked={services[k as keyof typeof services]} onChange={e => setServices({ ...services, [k]: e.target.checked })} style={{ accentColor: 'var(--primary)' }} />
+                      <label key={k} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: services[k as keyof typeof services] ? 'var(--accent-subtle)' : '#f9fafb', borderRadius: 10, border: services[k as keyof typeof services] ? '1px solid var(--accent)' : '1px solid #eaecf0', cursor: 'pointer', transition: 'all 0.2s' }}>
+                        <input type="checkbox" checked={services[k as keyof typeof services]} onChange={e => setServices({ ...services, [k]: e.target.checked })} style={{ accentColor: 'var(--accent)' }} />
                         <span style={{ fontSize: 13, fontWeight: 500 }}>{v}</span>
                       </label>
                     ))}
@@ -440,7 +440,7 @@ const EventsPage: React.FC = () => {
                   <textarea name="special_requests" className="form-input" placeholder="Any specific requirements (e.g. Pure Veg, Specific Themes)..." rows={3} style={{ resize: 'vertical' }} />
                 </div>
 
-                <button className="btn btn-primary btn-lg" style={{ width: '100%', marginTop: 8, background: '#101828' }} type="submit">
+                <button className="btn btn-primary btn-lg" style={{ width: '100%', marginTop: 8 }} type="submit">
                   Generate Quote Request <ArrowRight size={18} />
                 </button>
               </form>
