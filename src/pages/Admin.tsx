@@ -191,7 +191,10 @@ const AdminPage: React.FC = () => {
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-dark)', paddingTop: 80 }}>
         <div className="form-card" style={{ maxWidth: 400, width: '100%', margin: 24 }}>
           <div style={{ textAlign: 'center', marginBottom: 32 }}>
-            <div className="logo" style={{ justifyContent: 'center', marginBottom: 16, fontSize: 28 }}><Navigation size={28} /> GaonRide</div>
+            <div className="logo" style={{ justifyContent: 'center', marginBottom: 16, fontSize: 28 }}>
+              <img src="/logo.png" alt="GaonRide" style={{ height: '50px', width: 'auto' }} />
+              GaonRide
+            </div>
             <h2 style={{ fontSize: 24, fontWeight: 800 }}>Admin Dashboard</h2>
           </div>
           {loginError && <div style={{ padding: 12, borderRadius: 8, background: '#fef2f2', color: '#dc2626', fontSize: 14, marginBottom: 20, textAlign: 'center' }}>{loginError}</div>}

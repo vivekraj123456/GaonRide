@@ -184,6 +184,10 @@ button { font-family: inherit; cursor: pointer; font-feature-settings: "calt"; }
   letter-spacing: -0.5px;
 }
 .header.scrolled .logo { color: var(--text); }
+.logo img {
+  display: block;
+  transition: all 0.3s;
+}
 .logo:hover { opacity: 0.85; }
 .logo svg { transition: all 0.3s; }
 

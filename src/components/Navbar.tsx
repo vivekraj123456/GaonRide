@@ -35,7 +35,7 @@ const Navbar: React.FC = () => {
       <header className={`header ${scrolled ? 'scrolled' : ''}`}>
         <div className="container nav">
           <Link to="/" className="logo">
-            <Navigation size={30} />
+            <img src="/logo.png" alt="GaonRide" style={{ height: '40px', width: 'auto' }} />
             GaonRide
           </Link>
 
@@ -57,6 +57,7 @@ const Navbar: React.FC = () => {
               {lang === 'en' ? 'हिं' : 'EN'}
             </button>
             <Link to="/rides" className="btn btn-accent btn-sm">{t('nav.bookNow')}</Link>
+
             <button className="mobile-toggle" onClick={() => setMenuOpen(true)}>
               <Menu size={28} />
             </button>

@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
         <div className="footer-grid">
           <div>
             <div className="logo" style={{ marginBottom: 16, fontSize: 28, color: '#9fe870' }}>
-              <Navigation size={28} />
+              <img src="/logo.png" alt="GaonRide" style={{ height: '50px', width: 'auto' }} />
               GaonRide
             </div>
             <p style={{ fontSize: 14, lineHeight: 1.8, maxWidth: 320 }}>
